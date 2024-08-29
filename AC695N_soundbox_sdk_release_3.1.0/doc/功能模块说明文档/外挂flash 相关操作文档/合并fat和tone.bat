@@ -1,0 +1,1 @@
+copy /b /y fat_2020-05-18T09-41-41.bin+tone.bin fat_tone.bin
