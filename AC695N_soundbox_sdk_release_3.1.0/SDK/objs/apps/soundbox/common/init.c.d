@@ -123,4 +123,6 @@ objs/apps/soundbox/common/init.c.o: apps/soundbox/common/init.c \
   apps/soundbox/include\app_power_manage.h include_lib/update\update.h \
   apps/soundbox/include\app_main.h apps/soundbox/include\app_charge.h \
   apps/common/charge_box\chgbox_ctrl.h \
-  include_lib/update\update_loader_download.h
+  include_lib/update\update_loader_download.h \
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  apps/user_apps/dmx512.h

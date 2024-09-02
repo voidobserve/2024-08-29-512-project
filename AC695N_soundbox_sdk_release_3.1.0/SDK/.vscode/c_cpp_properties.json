@@ -128,7 +128,9 @@
                 "${workspaceFolder}/apps/soundbox/smartbox/file_transfer",
                 "${workspaceFolder}/apps/soundbox/smartbox/tuya",
                 "${workspaceFolder}/apps/soundbox/include/ui/color_led",
-                "C:/JL/pi32/pi32v2-include"
+                "C:/JL/pi32/pi32v2-include",
+                "${workspaceFolder}/apps/user_apps/",
+                "${workspaceFolder}/apps/user_apps/hardware/"
             ],
             "intelliSenseMode": "clang-x86",
             "name": "AC695N_soundbox"

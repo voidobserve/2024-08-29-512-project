@@ -156,9 +156,9 @@ Date：
 #define container_of(ptr, type, memb) \
 	((type *)((char *)(ptr) - offsetof(type, memb)))
 
-void delay(unsigned int);
+// void delay(unsigned int);
 
-void delay_us(unsigned int);
+// void delay_us(unsigned int);
 
 
 #endif

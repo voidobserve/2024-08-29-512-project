@@ -8,7 +8,7 @@
 	"os/os_api.h"
 	"generic/list.h"
 
-1646105095 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\include_lib\system\generic\typedef.h
+1725240714 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\include_lib\system\generic\typedef.h
 	"asm/cpu.h"
 	"generic/errno-base.h"
 	"string.h"
@@ -645,7 +645,7 @@
 
 1646105095 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\common\usb\usb_std_class_def.h
 
-1724897602 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\board\br23\board_ac695x_demo\board_ac695x_demo_cfg.h
+1725245070 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\board\br23\board_ac695x_demo\board_ac695x_demo_cfg.h
 	"usb_std_class_def.h"
 
 1646105095 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\board\br23\board_ac6951_kgb_v1\board_ac6951_kgb_cfg.h
@@ -3879,7 +3879,7 @@
 	"circular_buf.h"
 	"debug.h"
 
-1646105095 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\app_main.c
+1725242824 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\app_main.c
 	"system/includes.h"
 	"app_config.h"
 	"asm/pwm_led.h"
@@ -5285,7 +5285,7 @@
 	"typedef.h"
 	"JL_rcsp_protocol.h"
 
-1646105095 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\common\init.c
+1725242811 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\common\init.c
 	"app_config.h"
 	"system/includes.h"
 	"asm/charge.h"
@@ -5295,8 +5295,10 @@
 	"app_charge.h"
 	"chgbox_ctrl.h"
 	"update_loader_download.h"
+	"user_config.h"
+	"dmx512.h"
 
-1646105095 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\common\task_table.c
+1724925257 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\common\task_table.c
 	"system/includes.h"
 	"app_config.h"
 	"system/includes.h"
@@ -6233,7 +6235,7 @@
 	"key_event_deal.h"
 	"audio_recorder_mix.h"
 
-1646105095 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\task_manager\bt\bt.c
+1725242888 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\soundbox\task_manager\bt\bt.c
 	"system/includes.h"
 	"media/includes.h"
 	"app_config.h"
@@ -8272,5 +8274,26 @@
 1646105095 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\cpu\br23\ui_driver\led_1888\led1888.h
 
 1646105095 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\cpu\br23\ui_driver\ui_common.c
+	"includes.h"
+
+1725242141 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\user_config.h
+	"delay.h"
+
+1725242087 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\hardware\delay.h
+	"includes.h"
+
+1724922763 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\dmx512.h
+	"includes.h"
+
+1725242106 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\hardware\delay.c
+	"delay.h"
+
+1724924008 source:d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\hardware\uart.c
+	"uart.h"
+	"system/includes.h"
+	"app_config.h"
+	"asm/uart_dev.h"
+
+1724924013 d:\baidusyncdisk\a_workst\aworkst\2024-08-项目17-天奕灯具-512项目\ac695n_soundbox_sdk_release_3.1.0\ac695n_soundbox_sdk_release_3.1.0\sdk\apps\user_apps\hardware\uart.h
 	"includes.h"
 

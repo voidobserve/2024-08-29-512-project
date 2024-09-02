@@ -15,9 +15,8 @@
 #include "audio.h"
 #include "vm.h"
 
-
-#define LOG_TAG_CONST       APP
-#define LOG_TAG             "[APP]"
+#define LOG_TAG_CONST APP
+#define LOG_TAG "[APP]"
 #define LOG_ERROR_ENABLE
 #define LOG_DEBUG_ENABLE
 #define LOG_INFO_ENABLE
@@ -25,22 +24,19 @@
 #define LOG_CLI_ENABLE
 #include "debug.h"
 
-
-
 APP_VAR app_var;
-
 
 void app_entry_idle()
 {
     app_task_switch_to(APP_IDLE_TASK);
 }
 
-
-
 void app_task_loop()
 {
-    while (1) {
-        switch (app_curr_task) {
+    while (1)
+    {
+        switch (app_curr_task)
+        {
         case APP_POWERON_TASK:
             log_info("APP_POWERON_TASK \n");
             app_poweron_task();
@@ -49,7 +45,7 @@ void app_task_loop()
             log_info("APP_POWEROFF_TASK \n");
             app_poweroff_task();
             break;
-        case APP_BT_TASK:
+        case APP_BT_TASK: // 蓝牙模式
             log_info("APP_BT_TASK \n");
             app_bt_task();
             break;
@@ -94,8 +90,8 @@ void app_task_loop()
             app_smartbox_task();
             break;
         }
-        app_task_clear_key_msg();//清理按键消息
-        //检查整理VM
+        app_task_clear_key_msg(); // 清理按键消息
+        // 检查整理VM
         vm_check_all(0);
     }
 }
@@ -106,7 +102,8 @@ void app_main()
 
     app_var.start_time = timer_get_ms();
 
-    if (get_charge_online_flag()) {
+    if (get_charge_online_flag())
+    {
 
         app_var.poweron_charge = 1;
 
@@ -114,12 +111,14 @@ void app_main()
         vbat_check_init();
 #endif
 
-#ifndef  PC_POWER_ON_CHARGE
+#ifndef PC_POWER_ON_CHARGE
         app_curr_task = APP_IDLE_TASK;
 #else
         app_curr_task = APP_POWERON_TASK;
 #endif
-    } else {
+    }
+    else
+    {
 #if SOUNDCARD_ENABLE
         soundcard_peripheral_init();
 #endif
@@ -145,6 +144,3 @@ void app_main()
 
     app_task_loop();
 }
-
-
-

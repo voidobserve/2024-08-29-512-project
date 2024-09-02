@@ -40,7 +40,7 @@ void clock_remove_set(u32 type)
 #if (SOUNDCARD_ENABLE) || (TCFG_MIC_EFFECT_ENABLE)
 #define CLOCK_FIX   240
 #else
-#define CLOCK_FIX   0
+#define CLOCK_FIX   240
 #endif
 
 #if (TCFG_AUDIO_DAC_CONNECT_MODE == DAC_OUTPUT_FRONT_LR_REAR_LR) && TCFG_EQ_DIVIDE_ENABLE

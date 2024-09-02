@@ -1,5 +1,20 @@
 {
     "files.associations": {
-        "os_api.h": "c"
+        "os_api.h": "c",
+        "includes.h": "c",
+        "app_config.h": "c",
+        "dmx512.h": "c",
+        "update.h": "c",
+        "init.h": "c",
+        "board_ac695x_demo_cfg.h": "c",
+        "typedef.h": "c",
+        "cpu.h": "c",
+        "br23.h": "c",
+        "user_config.h": "c",
+        "debug.h": "c",
+        "delay.h": "c",
+        "freertos.h": "c",
+        "freertosconfig.h": "c",
+        "list.h": "c"
     }
 }

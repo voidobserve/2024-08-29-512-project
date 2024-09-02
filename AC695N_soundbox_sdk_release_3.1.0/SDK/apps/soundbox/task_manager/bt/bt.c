@@ -2,44 +2,42 @@
 /*************************************************************
    此文件函数主要是蓝牙模式各种状态处理
 
-	void app_bt_task()
+    void app_bt_task()
    bt模式主函数
 
-	static int bt_sys_event_handler(struct sys_event *event)
+    static int bt_sys_event_handler(struct sys_event *event)
    bt模式系统事件所有处理入口
 
-	static void bt_task_close(void)
-	bt模式退出
+    static void bt_task_close(void)
+    bt模式退出
 
 
-	void bt_function_select_init()
+    void bt_function_select_init()
     蓝牙功能配置
 
-	void bredr_handle_register()
- 	蓝牙协议栈回调函数
+    void bredr_handle_register()
+    蓝牙协议栈回调函数
 
-	static int bt_connction_status_event_handler(struct bt_event *bt)
-	蓝牙状态事件处理函数
+    static int bt_connction_status_event_handler(struct bt_event *bt)
+    蓝牙状态事件处理函数
 
-	static int bt_hci_event_handler(struct bt_event *bt)
-	蓝牙协议栈事件回调，app处理函数
+    static int bt_hci_event_handler(struct bt_event *bt)
+    蓝牙协议栈事件回调，app处理函数
 
-	static int bt_ai_event_handler(struct bt_event *bt)
-	蓝牙ai事件处理函数
+    static int bt_ai_event_handler(struct bt_event *bt)
+    蓝牙ai事件处理函数
 
-	int bt_background_event_handler_filter(struct sys_event *event)
-	蓝牙后台事件过滤处理
-	int bt_background_event_handler(struct sys_event *event)
-	蓝牙后台事件处理函数
+    int bt_background_event_handler_filter(struct sys_event *event)
+    蓝牙后台事件过滤处理
+    int bt_background_event_handler(struct sys_event *event)
+    蓝牙后台事件处理函数
 
-	int bt_key_event_handler(struct sys_event *event)
-	蓝牙按键处理函数
+    int bt_key_event_handler(struct sys_event *event)
+    蓝牙按键处理函数
 
-	avctp_user.h 有蓝牙支持的命令介绍
+    avctp_user.h 有蓝牙支持的命令介绍
 
 **************************************************************/
-
-
 
 #include "system/includes.h"
 #include "media/includes.h"
@@ -64,7 +62,6 @@
 
 #include "math.h"
 #include "spp_user.h"
-
 
 #include "app_protocol_common.h"
 
@@ -96,9 +93,8 @@
 #include "tuya_multi/tuya_le_multi_common.h"
 #include "multi_demo/le_multi_common.h"
 
-
-#define LOG_TAG_CONST        BT
-#define LOG_TAG             "[BT]"
+#define LOG_TAG_CONST BT
+#define LOG_TAG "[BT]"
 #define LOG_ERROR_ENABLE
 #define LOG_DEBUG_ENABLE
 #define LOG_INFO_ENABLE
@@ -106,6 +102,7 @@
 #define LOG_CLI_ENABLE
 #include "debug.h"
 
+#include "user_config.h"
 
 #if TCFG_APP_BT_EN
 
@@ -117,11 +114,9 @@ struct app_bt_opr app_bt_hdl = {
     .wait_exit = 0,
 };
 
-#define __this 	(&app_bt_hdl)
+#define __this (&app_bt_hdl)
 
 BT_USER_PRIV_VAR bt_user_priv_var;
-
-
 
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式变量初始化
@@ -135,7 +130,6 @@ void bt_var_init()
     memset((u8 *)&bt_user_priv_var, 0, sizeof(BT_USER_PRIV_VAR));
 }
 
-
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式协议栈回调函数
    @param    无
@@ -145,7 +139,7 @@ void bt_var_init()
 /*----------------------------------------------------------------------------*/
 void bredr_handle_register()
 {
-#if (USER_SUPPORT_PROFILE_SPP==1)
+#if (USER_SUPPORT_PROFILE_SPP == 1)
 #if APP_ONLINE_DEBUG
     extern void online_spp_init(void);
     spp_data_deal_handle_register(user_spp_data_handler);
@@ -156,22 +150,22 @@ void bredr_handle_register()
 #endif
 
 #if BT_SUPPORT_MUSIC_VOL_SYNC
-    ///蓝牙音乐和通话音量同步
+    /// 蓝牙音乐和通话音量同步
     music_vol_change_handle_register(bt_set_music_device_volume, phone_get_device_vol);
 #endif
 
 #if BT_SUPPORT_DISPLAY_BAT
-    ///电量显示获取电量的接口
+    /// 电量显示获取电量的接口
     get_battery_value_register(bt_get_battery_value);
 #endif
 
-    ///被测试盒链接上进入快速测试回调
+    /// 被测试盒链接上进入快速测试回调
     bt_fast_test_handle_register(bt_fast_test_api);
 
-    ///样机进入dut被测试仪器链接上回调
+    /// 样机进入dut被测试仪器链接上回调
     bt_dut_test_handle_register(bt_dut_api);
 
-    ///获取远端设备蓝牙名字回调
+    /// 获取远端设备蓝牙名字回调
     read_remote_name_handle_register(bt_read_remote_name);
 
     ////获取歌曲信息回调
@@ -180,11 +174,10 @@ void bredr_handle_register()
     BT_BREDR_HANDLE_REG();
 }
 
-
 #if (TRANS_MULTI_BLE_EN || TUYA_MULTI_BLE_EN) && TRANS_MULTI_BLE_MASTER_NUMS
-//指定搜索uuid
-//指定搜索uuid
-static const target_uuid_t  jl_search_uuid_table[] = {
+// 指定搜索uuid
+// 指定搜索uuid
+static const target_uuid_t jl_search_uuid_table[] = {
 
     // for uuid16
     // PRIMARY_SERVICE, ae30
@@ -203,7 +196,7 @@ static const target_uuid_t  jl_search_uuid_table[] = {
         .opt_type = ATT_PROPERTY_NOTIFY,
     },
 
-    //for uuid128,sample
+    // for uuid128,sample
     //	PRIMARY_SERVICE, 0000F530-1212-EFDE-1523-785FEABCD123
     //	CHARACTERISTIC,  0000F531-1212-EFDE-1523-785FEABCD123, NOTIFY,
     //	CHARACTERISTIC,  0000F532-1212-EFDE-1523-785FEABCD123, WRITE_WITHOUT_RESPONSE | DYNAMIC,
@@ -227,7 +220,6 @@ static const target_uuid_t  jl_search_uuid_table[] = {
 
 };
 
-
 static void ble_report_data_deal(att_data_report_t *report_data, target_uuid_t *search_uuid)
 {
     log_info("conn_handle:%04x,report_data:%02x,%02x,%d,len(%d)", report_data->conn_handle, report_data->packet_type,
@@ -240,15 +232,16 @@ static void ble_report_data_deal(att_data_report_t *report_data, target_uuid_t *
     /* return; */
     /* } */
 
-    switch (report_data->packet_type) {
-    case GATT_EVENT_NOTIFICATION:  //notify
+    switch (report_data->packet_type)
+    {
+    case GATT_EVENT_NOTIFICATION: // notify
         break;
 
-    case GATT_EVENT_INDICATION://indicate
-    case GATT_EVENT_CHARACTERISTIC_VALUE_QUERY_RESULT://read
+    case GATT_EVENT_INDICATION:                        // indicate
+    case GATT_EVENT_CHARACTERISTIC_VALUE_QUERY_RESULT: // read
         break;
 
-    case GATT_EVENT_LONG_CHARACTERISTIC_VALUE_QUERY_RESULT://read long
+    case GATT_EVENT_LONG_CHARACTERISTIC_VALUE_QUERY_RESULT: // read long
         break;
 
     default:
@@ -257,14 +250,14 @@ static void ble_report_data_deal(att_data_report_t *report_data, target_uuid_t *
 }
 
 static struct ble_client_operation_t *ble_client_api;
-static const u8 test_remoter_name1[] = "AC897N_MX(BLE)";//
+static const u8 test_remoter_name1[] = "AC897N_MX(BLE)"; //
 /* static const u8 test_remoter_name2[] = "AC630N_HID567(BLE)";// */
 static u16 ble_client_write_handle;
 static u16 ble_client_timer = 0;
 
 static const client_match_cfg_t match_dev01 = {
     .create_conn_mode = BIT(CLI_CREAT_BY_NAME),
-    .compare_data_len = sizeof(test_remoter_name1) - 1, //去结束符
+    .compare_data_len = sizeof(test_remoter_name1) - 1, // 去结束符
     .compare_data = test_remoter_name1,
     .bonding_flag = 0,
 };
@@ -283,10 +276,12 @@ static void client_test_write(void)
     u16 tmp_handle;
 
     count++;
-    for (i = 0; i < TRANS_MULTI_BLE_MASTER_NUMS; i++) {
+    for (i = 0; i < TRANS_MULTI_BLE_MASTER_NUMS; i++)
+    {
         tmp_handle = mul_dev_get_conn_handle(i, MULTI_ROLE_CLIENT);
 
-        if (tmp_handle && ble_client_write_handle) {
+        if (tmp_handle && ble_client_write_handle)
+        {
             ret = ble_client_api->opt_comm_send_ext(tmp_handle, ble_client_write_handle, &count, 16, ATT_OP_WRITE_WITHOUT_RESPOND);
             log_info("test_write:%04x,%d", tmp_handle, ret);
         }
@@ -296,19 +291,22 @@ static void client_test_write(void)
     /* log_info("test_write:%x", ret); */
 }
 
-
 static void client_event_callback(le_client_event_e event, u8 *packet, int size)
 {
-    switch (event) {
-    case CLI_EVENT_MATCH_DEV: {
+    switch (event)
+    {
+    case CLI_EVENT_MATCH_DEV:
+    {
         client_match_cfg_t *match_dev = packet;
         log_info("match_name:%s\n", match_dev->compare_data);
     }
     break;
 
-    case CLI_EVENT_MATCH_UUID: {
+    case CLI_EVENT_MATCH_UUID:
+    {
         opt_handle_t *opt_hdl = packet;
-        if (opt_hdl->search_uuid == &jl_search_uuid_table[0]) {
+        if (opt_hdl->search_uuid == &jl_search_uuid_table[0])
+        {
             ble_client_write_handle = opt_hdl->value_handle;
             log_info("match_uuid22\n");
         }
@@ -317,7 +315,8 @@ static void client_event_callback(le_client_event_e event, u8 *packet, int size)
 
     case CLI_EVENT_SEARCH_PROFILE_COMPLETE:
         log_info("CLI_EVENT_SEARCH_PROFILE_COMPLETE\n");
-        if ((!ble_client_timer) && ble_client_write_handle) {
+        if ((!ble_client_timer) && ble_client_write_handle)
+        {
             log_info("test timer_add\n");
             ble_client_timer = sys_timer_add(0, client_test_write, 500);
         }
@@ -327,7 +326,8 @@ static void client_event_callback(le_client_event_e event, u8 *packet, int size)
         break;
 
     case CLI_EVENT_DISCONNECT:
-        if (ble_client_timer && TRANS_MULTI_BLE_MASTER_NUMS == 1) {
+        if (ble_client_timer && TRANS_MULTI_BLE_MASTER_NUMS == 1)
+        {
             sys_timeout_del(ble_client_timer);
             ble_client_write_handle = 0;
             ble_client_timer = 0;
@@ -339,7 +339,6 @@ static void client_event_callback(le_client_event_e event, u8 *packet, int size)
     }
 }
 
-
 static const client_conn_cfg_t client_conn_config = {
     .match_dev_cfg[0] = &match_dev01,
     .match_dev_cfg[1] = NULL,
@@ -349,7 +348,7 @@ static const client_conn_cfg_t client_conn_config = {
     /* .search_uuid_cnt = 0, //配置不搜索profile，加快回连速度 */
     .search_uuid_cnt = (sizeof(jl_search_uuid_table) / sizeof(target_uuid_t)),
     .search_uuid_table = jl_search_uuid_table,
-    .security_en = 0, //支持加密使能,对应配置 config_le_sm_support_enable
+    .security_en = 0, // 支持加密使能,对应配置 config_le_sm_support_enable
     .event_callback = client_event_callback,
 };
 
@@ -402,9 +401,9 @@ void bt_function_select_init()
 #endif
 
 #if (TCFG_SPI_LCD_ENABLE)
-#if TCFG_USER_EMITTER_ENABLE//带有屏幕的方案根据UI选项连接
+#if TCFG_USER_EMITTER_ENABLE // 带有屏幕的方案根据UI选项连接
     ////设置开机回链的设备个数
-    __set_auto_conn_device_num(10);//彩屏方案支持10个设备的连接
+    __set_auto_conn_device_num(10); // 彩屏方案支持10个设备的连接
 #endif
 #endif
 
@@ -417,12 +416,11 @@ void bt_function_select_init()
     __set_user_background_goback(BACKGROUND_GOBACK); // 后台链接是否跳回蓝牙 1:跳回
 
     ////设置蓝牙加密的level
-    //io_capabilities ; /*0: Display only 1: Display YesNo 2: KeyboardOnly 3: NoInputNoOutput*/
-    //authentication_requirements: 0:not protect  1 :protect
+    // io_capabilities ; /*0: Display only 1: Display YesNo 2: KeyboardOnly 3: NoInputNoOutput*/
+    // authentication_requirements: 0:not protect  1 :protect
     __set_simple_pair_param(3, 0, 2);
 
-
-#if (USER_SUPPORT_PROFILE_PBAP==1)
+#if (USER_SUPPORT_PROFILE_PBAP == 1)
     ////设置蓝牙设备类型
     __change_hci_class_type(BD_CLASS_CAR_AUDIO);
 #endif
@@ -431,7 +429,6 @@ void bt_function_select_init()
     void lmp_set_sniff_disable(void);
     lmp_set_sniff_disable();
 #endif
-
 
     /*
                 TX     RX
@@ -451,8 +448,7 @@ void bt_function_select_init()
 #if TCFG_USER_BLE_ENABLE
     {
         u8 tmp_ble_addr[6];
-#if (TCFG_BLE_DEMO_SELECT == DEF_BLE_DEMO_ADV \
-		|| TCFG_BLE_DEMO_SELECT == DEF_BLE_DEMO_GMA)
+#if (TCFG_BLE_DEMO_SELECT == DEF_BLE_DEMO_ADV || TCFG_BLE_DEMO_SELECT == DEF_BLE_DEMO_GMA)
         /* bt_set_tx_power(9);//ble txpwer level:0~9 */
         memcpy(tmp_ble_addr, (void *)bt_get_mac_addr(), 6);
 #else
@@ -468,14 +464,12 @@ void bt_function_select_init()
     ble_client_config_init();
 #endif
 
-
 #endif // TCFG_USER_BLE_ENABLE
 
 #if (CONFIG_BT_MODE != BT_NORMAL)
     set_bt_enhanced_power_control(1);
 #endif
 }
-
 
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式协议栈对应状态处理函数
@@ -489,18 +483,20 @@ static int bt_connction_status_event_handler(struct bt_event *bt)
 
     log_debug("-----------------------bt_connction_status_event_handler %d", bt->event);
 
-    if (bt_status_event_filter(bt) == false) {
+    if (bt_status_event_filter(bt) == false)
+    {
         return false;
     }
 
-    switch (bt->event) {
+    switch (bt->event)
+    {
     case BT_STATUS_EXIT_OK:
         log_info("BT_STATUS_EXIT_OK\n");
         break;
     case BT_STATUS_INIT_OK:
         log_info("BT_STATUS_INIT_OK\n");
         bt_status_init_ok(bt);
-#if(TCFG_TEST_BOX_ENABLE || TCFG_CHARGESTORE_ENABLE)
+#if (TCFG_TEST_BOX_ENABLE || TCFG_CHARGESTORE_ENABLE)
         chargestore_set_bt_init_ok(1);
 #endif
         break;
@@ -570,7 +566,7 @@ static int bt_connction_status_event_handler(struct bt_event *bt)
         bt_status_call_vol_change(bt);
         break;
     case BT_STATUS_SNIFF_STATE_UPDATE:
-        log_info(" BT_STATUS_SNIFF_STATE_UPDATE \n");    //0退出SNIFF
+        log_info(" BT_STATUS_SNIFF_STATE_UPDATE \n"); // 0退出SNIFF
         bt_status_sniff_state_update(bt);
         break;
     case BT_STATUS_LAST_CALL_TYPE_CHANGE:
@@ -595,7 +591,7 @@ static int bt_connction_status_event_handler(struct bt_event *bt)
         log_info("  BT_STATUS_AVRCP_INCOME_OPID \n");
         bt_status_avrcp_income_opid(bt);
         break;
-    case  BT_STATUS_RECONN_OR_CONN:
+    case BT_STATUS_RECONN_OR_CONN:
         log_info("  BT_STATUS_RECONN_OR_CONN \n");
         break;
     default:
@@ -604,12 +600,6 @@ static int bt_connction_status_event_handler(struct bt_event *bt)
     }
     return 0;
 }
-
-
-
-
-
-
 
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式协议栈事件
@@ -620,14 +610,16 @@ static int bt_connction_status_event_handler(struct bt_event *bt)
 /*----------------------------------------------------------------------------*/
 static int bt_hci_event_handler(struct bt_event *bt)
 {
-    //对应原来的蓝牙连接上断开处理函数  ,bt->value=reason
+    // 对应原来的蓝牙连接上断开处理函数  ,bt->value=reason
     log_debug("------------------------bt_hci_event_handler reason %x %x", bt->event, bt->value);
 
-    if (bt_hci_event_filter(bt) == 0) {
+    if (bt_hci_event_filter(bt) == 0)
+    {
         return 0;
     }
 
-    switch (bt->event) {
+    switch (bt->event)
+    {
     case HCI_EVENT_INQUIRY_COMPLETE:
         log_info(" HCI_EVENT_INQUIRY_COMPLETE \n");
         bt_hci_event_inquiry(bt);
@@ -638,51 +630,52 @@ static int bt_hci_event_handler(struct bt_event *bt)
         break;
     case HCI_EVENT_USER_CONFIRMATION_REQUEST:
         log_info(" HCI_EVENT_USER_CONFIRMATION_REQUEST %d \n", bt->value);
-        ///<可通过按键来确认是否配对 1：配对   0：取消
+        ///< 可通过按键来确认是否配对 1：配对   0：取消
         bt_send_pair(1);
         clock_remove_set(BT_CONN_CLK);
         break;
     case HCI_EVENT_USER_PASSKEY_REQUEST:
         log_info(" HCI_EVENT_USER_PASSKEY_REQUEST \n");
-        ///<可以开始输入6位passkey
+        ///< 可以开始输入6位passkey
         break;
     case HCI_EVENT_USER_PRESSKEY_NOTIFICATION:
         log_info(" HCI_EVENT_USER_PRESSKEY_NOTIFICATION %x\n", bt->value);
-        ///<可用于显示输入passkey位置 value 0:start  1:enrer  2:earse   3:clear  4:complete
+        ///< 可用于显示输入passkey位置 value 0:start  1:enrer  2:earse   3:clear  4:complete
         break;
-    case HCI_EVENT_PIN_CODE_REQUEST :
+    case HCI_EVENT_PIN_CODE_REQUEST:
         log_info("HCI_EVENT_PIN_CODE_REQUEST  \n");
         bt_send_pair(1);
         break;
-    case HCI_EVENT_VENDOR_NO_RECONN_ADDR :
+    case HCI_EVENT_VENDOR_NO_RECONN_ADDR:
         log_info("HCI_EVENT_VENDOR_NO_RECONN_ADDR \n");
-        bt_hci_event_disconnect(bt) ;
+        bt_hci_event_disconnect(bt);
         break;
-    case HCI_EVENT_DISCONNECTION_COMPLETE :
+    case HCI_EVENT_DISCONNECTION_COMPLETE:
         log_info("HCI_EVENT_DISCONNECTION_COMPLETE \n");
-        bt_hci_event_disconnect(bt) ;
+        bt_hci_event_disconnect(bt);
         clock_remove_set(BT_CONN_CLK);
         break;
     case BTSTACK_EVENT_HCI_CONNECTIONS_DELETE:
     case HCI_EVENT_CONNECTION_COMPLETE:
         log_info(" HCI_EVENT_CONNECTION_COMPLETE \n");
-        switch (bt->value) {
-        case ERROR_CODE_SUCCESS :
+        switch (bt->value)
+        {
+        case ERROR_CODE_SUCCESS:
             log_info("ERROR_CODE_SUCCESS  \n");
             bt_hci_event_connection(bt);
             break;
         case ERROR_CODE_PIN_OR_KEY_MISSING:
             log_info(" ERROR_CODE_PIN_OR_KEY_MISSING \n");
             bt_hci_event_linkkey_missing(bt);
-        case ERROR_CODE_SYNCHRONOUS_CONNECTION_LIMIT_TO_A_DEVICE_EXCEEDED :
+        case ERROR_CODE_SYNCHRONOUS_CONNECTION_LIMIT_TO_A_DEVICE_EXCEEDED:
         case ERROR_CODE_CONNECTION_REJECTED_DUE_TO_LIMITED_RESOURCES:
         case ERROR_CODE_CONNECTION_REJECTED_DUE_TO_UNACCEPTABLE_BD_ADDR:
-        case ERROR_CODE_CONNECTION_ACCEPT_TIMEOUT_EXCEEDED  :
-        case ERROR_CODE_REMOTE_USER_TERMINATED_CONNECTION   :
-        case ERROR_CODE_CONNECTION_TERMINATED_BY_LOCAL_HOST :
-        case ERROR_CODE_AUTHENTICATION_FAILURE :
+        case ERROR_CODE_CONNECTION_ACCEPT_TIMEOUT_EXCEEDED:
+        case ERROR_CODE_REMOTE_USER_TERMINATED_CONNECTION:
+        case ERROR_CODE_CONNECTION_TERMINATED_BY_LOCAL_HOST:
+        case ERROR_CODE_AUTHENTICATION_FAILURE:
         case CUSTOM_BB_AUTO_CANCEL_PAGE:
-            bt_hci_event_disconnect(bt) ;
+            bt_hci_event_disconnect(bt);
             break;
         case ERROR_CODE_PAGE_TIMEOUT:
             log_info(" ERROR_CODE_PAGE_TIMEOUT \n");
@@ -692,7 +685,7 @@ static int bt_hci_event_handler(struct bt_event *bt)
             log_info(" ERROR_CODE_CONNECTION_TIMEOUT \n");
             bt_hci_event_connection_timeout(bt);
             break;
-        case ERROR_CODE_ACL_CONNECTION_ALREADY_EXISTS  :
+        case ERROR_CODE_ACL_CONNECTION_ALREADY_EXISTS:
             log_info("ERROR_CODE_ACL_CONNECTION_ALREADY_EXISTS   \n");
             bt_hci_event_connection_exist(bt);
             break;
@@ -706,8 +699,6 @@ static int bt_hci_event_handler(struct bt_event *bt)
     return 0;
 }
 
-
-
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙后台事件过滤处理
    @param    event: 事件
@@ -719,20 +710,24 @@ int bt_background_event_handler_filter(struct sys_event *event)
 {
     u8 ret = 0;
 #if TCFG_BLUETOOTH_BACK_MODE
-    if ((u32)event->arg == SYS_BT_EVENT_TYPE_CON_STATUS) {
+    if ((u32)event->arg == SYS_BT_EVENT_TYPE_CON_STATUS)
+    {
         log_info("bt con event: %d \n", event->u.bt.event);
-        switch (event->u.bt.event) {
+        switch (event->u.bt.event)
+        {
         // 需要切换蓝牙的命令
         case BT_STATUS_A2DP_MEDIA_START:
-            if (__this->sbc_packet_step != 0) {
+            if (__this->sbc_packet_step != 0)
+            {
                 /* log_info("sbc_packet_step : %d \n", __this->sbc_packet_step); */
                 break;
             }
 
         case BT_STATUS_FIRST_DISCONNECT:
         case BT_STATUS_SECOND_DISCONNECT:
-            //关机导致的断开不可以回去蓝牙，否则后台关机会有问题
-            if (app_var.goto_poweroff_flag) {
+            // 关机导致的断开不可以回去蓝牙，否则后台关机会有问题
+            if (app_var.goto_poweroff_flag)
+            {
                 break;
             }
 #if BACKGROUND_GOBACK
@@ -743,11 +738,13 @@ int bt_background_event_handler_filter(struct sys_event *event)
 #endif
 
 #else
-            //判断断开的是sink设备，默认切换蓝牙
-            if (event->u.bt.value) {
+            // 判断断开的是sink设备，默认切换蓝牙
+            if (event->u.bt.value)
+            {
                 ret = 1;
             }
-            if (ret == 0) {
+            if (ret == 0)
+            {
                 bt_status_disconnect_background(&event->u.bt);
             }
 #endif
@@ -776,7 +773,7 @@ int bt_background_event_handler_filter(struct sys_event *event)
 #endif
             break;
 
-        case  BT_STATUS_ENCRY_COMPLETE:
+        case BT_STATUS_ENCRY_COMPLETE:
             break;
         case BT_STATUS_SCO_STATUS_CHANGE:
             ret = 1;
@@ -805,9 +802,12 @@ int bt_background_event_handler_filter(struct sys_event *event)
             bt_connction_status_event_handler(&event->u.bt);
             break;
         }
-    } else if ((u32)event->arg == SYS_BT_EVENT_TYPE_HCI_STATUS) {
+    }
+    else if ((u32)event->arg == SYS_BT_EVENT_TYPE_HCI_STATUS)
+    {
         /* log_info("bt hci event: %d \n", event->u.bt.event); */
-        switch (event->u.bt.event) {
+        switch (event->u.bt.event)
+        {
         case HCI_EVENT_IO_CAPABILITY_REQUEST:
             clock_add_set(BT_CONN_CLK);
 #if BACKGROUND_GOBACK
@@ -824,9 +824,11 @@ int bt_background_event_handler_filter(struct sys_event *event)
         }
     }
 #if TCFG_USER_TWS_ENABLE
-    else if (((u32)event->arg == SYS_BT_EVENT_FROM_TWS)) {
+    else if (((u32)event->arg == SYS_BT_EVENT_FROM_TWS))
+    {
         /* log_info("bt tws event: %d \n", event->u.bt.event); */
-        switch (event->u.bt.event) {
+        switch (event->u.bt.event)
+        {
         /* case TWS_EVENT_CONNECTED: */
         /* ret = 1; */
         /* break; */
@@ -839,9 +841,11 @@ int bt_background_event_handler_filter(struct sys_event *event)
         }
     }
 #endif
-    else if ((u32)event->arg == SYS_EVENT_FROM_CTRLER) {
-        switch (event->u.bt.event) {
-        case  BTCTRLER_EVENT_RESUME_REQ:
+    else if ((u32)event->arg == SYS_EVENT_FROM_CTRLER)
+    {
+        switch (event->u.bt.event)
+        {
+        case BTCTRLER_EVENT_RESUME_REQ:
             /*log_info("-------   BTCTRLER_EVENT_RESUME_REQ \n"); */
             ret = 2;
             break;
@@ -861,12 +865,17 @@ int bt_background_event_handler_filter(struct sys_event *event)
 int bt_background_event_handler(struct sys_event *event)
 {
     int ret = bt_background_event_handler_filter(event);
-    if (ret) {
-        if (false == app_check_curr_task(APP_BT_TASK)) {
+    if (ret)
+    {
+        if (false == app_check_curr_task(APP_BT_TASK))
+        {
             __this->cmd_flag = 1;
-            if (ret == 2) {
+            if (ret == 2)
+            {
                 __this->call_flag = 1;
-            } else {
+            }
+            else
+            {
                 __this->call_flag = 0;
             }
             app_task_switch_to(APP_BT_TASK);
@@ -876,14 +885,13 @@ int bt_background_event_handler(struct sys_event *event)
     return 0;
 }
 
-
-//#if (USER_SUPPORT_PROFILE_HID==1)
+// #if (USER_SUPPORT_PROFILE_HID==1)
 ////重写bt_get_hid_name
-//const char * bt_get_hid_name()
+// const char * bt_get_hid_name()
 //{
 //	return "HID_USER";
-//}
-//#endif
+// }
+// #endif
 
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式按键响应处理
@@ -897,59 +905,100 @@ int bt_key_event_handler(struct sys_event *event)
     int ret = true;
     struct key_event *key = &event->u.key;
 
-    if (bt_key_event_filter_before() == false) {
+    if (bt_key_event_filter_before() == false)
+    {
         return false;
     }
 
     int key_event = event->u.key.event;
     int key_value = event->u.key.value;
 
-
     log_debug("bt key_event:%d %d %d %d\n", key_event, key->value, key->event, key->init);
 
-    if (bt_key_event_filter_after(key_event) == true) {
+    if (bt_key_event_filter_after(key_event) == true)
+    {
         return true;
     }
 
-    switch (key_event) {
+    switch (key_event)
+    {
 
-    case  KEY_MUSIC_PP:
+    case KEY_MUSIC_PP:
         log_info("   KEY_MUSIC_PP  \n");
         bt_key_music_pp();
         break;
-    case  KEY_MUSIC_PREV:
+    case KEY_MUSIC_PREV:
         log_info("    KEY_MUSIC_PREV \n");
-        bt_key_music_prev();
+        // bt_key_music_prev();
+
+        // printf("test\n");
+        // dmx512_send_start();
+        // local_irq_disable();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_8us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_8us();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_8us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_8us();
+        // local_irq_enable();
+
+        // local_irq_disable();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_88us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_88us();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_88us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_88us();
+        // local_irq_enable();
+
+        local_irq_disable();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_200us();
+
+        dmx512_send_start();
+
+        local_irq_enable();
+
         break;
-    case  KEY_MUSIC_NEXT:
+    case KEY_MUSIC_NEXT:
         log_info("    KEY_MUSIC_NEXT \n");
         bt_key_music_next();
         break;
-    case  KEY_VOL_UP:
+    case KEY_VOL_UP:
         log_info("    KEY_VOL_UP \n");
         bt_key_vol_up();
         break;
-    case  KEY_VOL_DOWN:
+    case KEY_VOL_DOWN:
         log_info("    KEY_VOL_DOWN \n");
         bt_key_vol_down();
         break;
-    case  KEY_CALL_LAST_NO:
+    case KEY_CALL_LAST_NO:
         log_info("    KEY_CALL_LAST_NO \n");
         bt_key_call_last_on();
         break;
-    case  KEY_CALL_HANG_UP:
+    case KEY_CALL_HANG_UP:
         log_info("    KEY_CALL_HANG_UP \n");
         bt_key_call_hand_up();
         break;
-    case  KEY_CALL_ANSWER:
+    case KEY_CALL_ANSWER:
         log_info("    KEY_CALL_ANSWER \n");
         bt_key_call_answer();
         break;
-    case  KEY_OPEN_SIRI:
+    case KEY_OPEN_SIRI:
         log_info("    KEY_OPEN_SIRI \n");
         bt_key_call_siri();
         break;
-    case  KEY_HID_CONTROL:
+    case KEY_HID_CONTROL:
         log_info("    KEY_HID_CONTROL \n");
         bt_key_hid_control();
         break;
@@ -961,27 +1010,29 @@ int bt_key_event_handler(struct sys_event *event)
         log_info("    KEY_LOW_LANTECY \n");
         bt_key_low_lantecy();
         break;
-    case  KEY_NULL:
+    case KEY_NULL:
         log_info("    KEY_NULL \n");
         ret = false;
 #if TCFG_USER_TWS_ENABLE
-        if ((u32)event->arg == KEY_EVENT_FROM_TWS) {
+        if ((u32)event->arg == KEY_EVENT_FROM_TWS)
+        {
             break;
         }
 #endif
         break;
 
     case KEY_HID_MODE_SWITCH:
-#if (USER_SUPPORT_PROFILE_HID==1)
+#if (USER_SUPPORT_PROFILE_HID == 1)
         __this->hid_mode = !__this->hid_mode;
         printf("KEY_HID_TAKE_PICTURE, %d\n", __this->hid_mode);
-        user_change_profile_mode(__this->hid_mode);///HID设备名称， 默认蓝牙名称追加_HID
-        //如果要修改名称， 可以重写重写这个函数,上面有重写例子
-        //const char *__attribute__((weak)) bt_get_hid_name()
+        user_change_profile_mode(__this->hid_mode); /// HID设备名称， 默认蓝牙名称追加_HID
+                                                    // 如果要修改名称， 可以重写重写这个函数,上面有重写例子
+                                                    // const char *__attribute__((weak)) bt_get_hid_name()
 #endif
         break;
     case KEY_HID_TAKE_PICTURE:
-        if (__this->hid_mode) {
+        if (__this->hid_mode)
+        {
             printf("KEY_HID_TAKE_PICTURE\n");
             user_send_cmd_prepare(USER_CTRL_HID_BOTH, 0, NULL);
         }
@@ -992,11 +1043,15 @@ int bt_key_event_handler(struct sys_event *event)
 #if (TCFG_DEC2TWS_ENABLE)
         ret = false;
 #else
-        if (tws_api_get_tws_state() & TWS_STA_SIBLING_CONNECTED) {
-            if (tws_api_get_role() == TWS_ROLE_MASTER) {
+        if (tws_api_get_tws_state() & TWS_STA_SIBLING_CONNECTED)
+        {
+            if (tws_api_get_role() == TWS_ROLE_MASTER)
+            {
                 bt_tws_api_push_cmd(SYNC_CMD_MODE_CHANGE, 400);
             }
-        } else {
+        }
+        else
+        {
             ret = false;
             break;
         }
@@ -1016,7 +1071,6 @@ int bt_key_event_handler(struct sys_event *event)
     return ret;
 }
 
-
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式协议栈状态事件、hci事件、对箱事件
    @param    event: 事件
@@ -1027,20 +1081,28 @@ int bt_key_event_handler(struct sys_event *event)
 int bt_sys_event_office(struct sys_event *event)
 {
     u8 ret = false;
-    if ((u32)event->arg == SYS_BT_EVENT_TYPE_CON_STATUS) {
+    if ((u32)event->arg == SYS_BT_EVENT_TYPE_CON_STATUS)
+    {
         bt_connction_status_event_handler(&event->u.bt);
-    } else if ((u32)event->arg == SYS_BT_EVENT_TYPE_HCI_STATUS) {
+    }
+    else if ((u32)event->arg == SYS_BT_EVENT_TYPE_HCI_STATUS)
+    {
         bt_hci_event_handler(&event->u.bt);
-    } else if ((u32)event->arg == SYS_BT_EVENT_FORM_SELF) {
+    }
+    else if ((u32)event->arg == SYS_BT_EVENT_FORM_SELF)
+    {
         bt_reverb_status_change(&event->u.bt);
     }
 #if TCFG_USER_TWS_ENABLE
-    else if (((u32)event->arg == SYS_BT_EVENT_FROM_TWS)) {
+    else if (((u32)event->arg == SYS_BT_EVENT_FROM_TWS))
+    {
         ret = bt_tws_connction_status_event_handler(&event->u.bt);
     }
 #endif
-    else if (((u32)event->arg == SYS_BT_EVENT_FROM_KEY)) {
-        switch (event->u.key.event) {
+    else if (((u32)event->arg == SYS_BT_EVENT_FROM_KEY))
+    {
+        switch (event->u.key.event)
+        {
         case KEY_CHANGE_MODE:
             app_task_switch_next();
             break;
@@ -1048,7 +1110,6 @@ int bt_sys_event_office(struct sys_event *event)
     }
     return ret;
 }
-
 
 /*----------------------------------------------------------------------------*/
 /**@brief    蓝牙模式事件消息处理
@@ -1060,7 +1121,8 @@ int bt_sys_event_office(struct sys_event *event)
 static int bt_sys_event_handler(struct sys_event *event)
 {
     int ret = false;
-    switch (event->type) {
+    switch (event->type)
+    {
     case SYS_KEY_EVENT:
         ret = bt_key_event_handler(event);
         break;
@@ -1069,8 +1131,9 @@ static int bt_sys_event_handler(struct sys_event *event)
         break;
     case SYS_DEVICE_EVENT:
 #if APP_ONLINE_DEBUG
-        if ((u32)event->arg == DEVICE_EVENT_ONLINE_DATA) {
-            //putchar('%');
+        if ((u32)event->arg == DEVICE_EVENT_ONLINE_DATA)
+        {
+            // putchar('%');
             extern void app_online_event_handle(int evt_value);
             app_online_event_handle(event->u.dev.value);
         }
@@ -1091,18 +1154,20 @@ static int bt_sys_event_handler(struct sys_event *event)
    @note
 */
 /*----------------------------------------------------------------------------*/
-static void  bt_tone_play_end_callback(void *priv, int flag)
+static void bt_tone_play_end_callback(void *priv, int flag)
 {
     u32 index = (u32)priv;
 
-    if (APP_BT_TASK != app_get_curr_task()) {
+    if (APP_BT_TASK != app_get_curr_task())
+    {
         log_error("tone callback task out \n");
         return;
     }
 
-    switch (index) {
+    switch (index)
+    {
     case IDEX_TONE_BT_MODE:
-        ///提示音播放结束， 启动播放器播放
+        /// 提示音播放结束， 启动播放器播放
         bt_task_start();
         break;
     default:
@@ -1123,7 +1188,11 @@ void app_bt_task()
     int msg[32];
     ui_update_status(STATUS_EXIT_LOWPOWER);
 
-    bt_task_init();//初始化变量、时钟、显示(未进行协议栈初始化)
+    bt_task_init(); // 初始化变量、时钟、显示(未进行协议栈初始化)
+
+    memset(dmx512_txbuff, 0xAA, 513);
+    gpio_set_direction(IO_PORTB_01, 0);    //
+    gpio_set_output_value(IO_PORTB_01, 1); //
 
 #if TCFG_TONE2TWS_ENABLE
     extern void tone2tws_bt_task_start(u8 tone_play);
@@ -1131,33 +1200,44 @@ void app_bt_task()
 #endif
 
     extern u8 get_tws_background_connected_flag();
-    if (!__this->cmd_flag && (!get_tws_background_connected_flag())) { //蓝牙后台拉回蓝牙模式不播放提示音
+    if (!__this->cmd_flag && (!get_tws_background_connected_flag()))
+    { // 蓝牙后台拉回蓝牙模式不播放提示音
         tone_play_with_callback_by_name(tone_table[IDEX_TONE_BT_MODE], 1, bt_tone_play_end_callback, (void *)IDEX_TONE_BT_MODE);
-        //协议栈初始化在提示音结束进行
-    } else {
-        //后台返回的情况没有播放提示音，需要在这里进行协议栈的resume
+        // 协议栈初始化在提示音结束进行
+    }
+    else
+    {
+        // 后台返回的情况没有播放提示音，需要在这里进行协议栈的resume
         bt_task_start();
     }
 #if TCFG_DEC2TWS_ENABLE
     extern void set_tws_background_connected_flag(u8 flag);
-    if (get_tws_background_connected_flag()) {
+    if (get_tws_background_connected_flag())
+    {
         int state = tws_api_get_tws_state();
-        if (state & TWS_STA_SIBLING_CONNECTED) {
-            if (tws_api_get_role() == TWS_ROLE_MASTER) {
+        if (state & TWS_STA_SIBLING_CONNECTED)
+        {
+            if (tws_api_get_role() == TWS_ROLE_MASTER)
+            {
                 app_task_switch_back();
-            } else {
+            }
+            else
+            {
                 set_tws_background_connected_flag(0);
             }
         }
     }
 #endif
 
-    while (1) {
+    while (1)
+    {
         app_task_get_msg(msg, ARRAY_SIZE(msg), 1);
 
-        switch (msg[0]) {
+        switch (msg[0])
+        {
         case APP_MSG_SYS_EVENT:
-            if (bt_sys_event_handler((struct sys_event *)(msg + 1)) == false) {
+            if (bt_sys_event_handler((struct sys_event *)(msg + 1)) == false)
+            {
                 app_default_event_deal((struct sys_event *)(&msg[1]));
             }
             break;
@@ -1165,32 +1245,38 @@ void app_bt_task()
             break;
         }
 
-
-
 #if TCFG_BLUETOOTH_BACK_MODE
-        if (!__this->init_ok && !app_var.goto_poweroff_flag) {
-            //蓝牙后台方案必须要等待协议栈初始化完成
+        if (!__this->init_ok && !app_var.goto_poweroff_flag)
+        {
+            // 蓝牙后台方案必须要等待协议栈初始化完成
             continue;
         }
 #else
-        if (__this->init_start && (!__this->init_ok)) { //协议栈已经初始化 但没有初始化完成
-            //需要等待初始化完成才可以走退出流程
+        if (__this->init_start && (!__this->init_ok))
+        { // 协议栈已经初始化 但没有初始化完成
+            // 需要等待初始化完成才可以走退出流程
             continue;
         }
 #endif
 
-        if (app_task_exitting()) {
-            if (__this->init_start) {
+        if (app_task_exitting())
+        {
+            if (__this->init_start)
+            {
                 bt_task_close();
                 __this->wait_exit = 1;
-            } else { //蓝牙协议栈没有初始化，可以直接退出
+            }
+            else
+            { // 蓝牙协议栈没有初始化，可以直接退出
                 bt_task_close();
                 return;
             }
         }
 
-        if (__this->wait_exit) { //开始退出
-            if (!__this->exiting) { ///等待蓝牙退出处理完成
+        if (__this->wait_exit)
+        { // 开始退出
+            if (!__this->exiting)
+            { /// 等待蓝牙退出处理完成
                 __this->wait_exit = 0;
                 return;
             }
@@ -1200,7 +1286,7 @@ void app_bt_task()
 
 u8 bt_app_exit_check()
 {
-    return	bt_app_switch_exit_check();
+    return bt_app_switch_exit_check();
 }
 
 #else
@@ -1218,7 +1304,6 @@ int bt_background_event_handler_filter(struct sys_event *event)
 {
     return 0;
 }
-
 
 u8 get_call_status()
 {

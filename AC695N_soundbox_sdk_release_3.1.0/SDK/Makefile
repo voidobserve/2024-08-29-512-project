@@ -206,7 +206,10 @@ INCLUDES := \
 	-Iapps/soundbox/smartbox/file_transfer \
 	-Iapps/soundbox/smartbox/tuya \
 	-Iapps/soundbox/include/ui/color_led \
+	-Iapps/user_apps/ \
+	-Iapps/user_apps/hardware \
 	-I$(SYS_INC_DIR) \
+	
 
 
 # 需要编译的 .c 文件
@@ -714,7 +717,8 @@ c_SRC_FILES := \
 	cpu/br23/ui_driver/lcd_spi/spi_oled.c \
 	cpu/br23/ui_driver/led7/led7_driver.c \
 	cpu/br23/ui_driver/ui_common.c \
-
+	apps/user_apps/hardware/delay.c \
+	apps/user_apps/dmx512.c \
 
 # 需要编译的 .S 文件
 S_SRC_FILES := \
