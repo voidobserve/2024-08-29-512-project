@@ -15,6 +15,7 @@
         "delay.h": "c",
         "freertos.h": "c",
         "freertosconfig.h": "c",
-        "list.h": "c"
+        "list.h": "c",
+        "uart.h": "c"
     }
 }

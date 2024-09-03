@@ -3,9 +3,7 @@
 
 #include "includes.h"
 
-// bool uart_module_init(void); // 初始化串口
-// bool uart_module_close(void); // 关闭串口
-
-// void uart_module_tx(u8 *buf, u16 len); // 使用串口发送数据
+void user_test_uart_config(void);
+void user_test_uart_close(void);
 
 #endif

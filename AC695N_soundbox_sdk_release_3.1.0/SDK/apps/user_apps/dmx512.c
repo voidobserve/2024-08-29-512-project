@@ -10,22 +10,24 @@
  *串口导出数据配置
  *注意IO口设置不要和普通log输出uart冲突
  */
-#define MOD_UART_TX_PORT IO_PORTB_01 /*数据导出发送IO*/
-#define MOD_UART_RX_PORT IO_PORTB_00 // 数据接收IO
-#define MOD_UART_BAUDRATE 250000     /*数据导出波特率, 和接收端设置一致*/
-#define MOD_UART_TIMEOUT 20          /*接收超时时间(ms)*/
+#define MOD_UART_TX_PORT DMX512_SEND_DATA_PIN /*数据导出发送IO*/
+// #define MOD_UART_RX_PORT IO_PORTB_00 // 数据接收IO
+#define MOD_UART_RX_PORT -1 // 数据接收IO
 
-static u8 uart_module_cbuf[512] __attribute__((aligned(4)));  // 接收缓存, 用于SDK提供的接口对应使用的硬件缓存
-static u8 uart_module_rxbuf[512] __attribute__((aligned(4))); // 应用层接收缓存, 用于提取与处理数据
-static u8 uart_module_txbuf[128] __attribute__((aligned(4))); // 发送缓存, 发送时会将发送内容写入缓存再发送
+#define MOD_UART_BAUDRATE 250000 /*数据导出波特率, 和接收端设置一致*/
+#define MOD_UART_TIMEOUT 20      /*接收超时时间(ms)*/
+
+static u8 uart_module_cbuf[1024] __attribute__((aligned(4))); // 接收缓存, 用于SDK提供的接口对应使用的硬件缓存
+// static u8 uart_module_rxbuf[1024] __attribute__((aligned(4))); // 应用层接收缓存, 用于提取与处理数据
+static u8 uart_module_txbuf[1024] __attribute__((aligned(4))); // 发送缓存, 发送时会将发送内容写入缓存再发送
 static const uart_bus_t *uart_bus = NULL;
 
-u16 dmx512_tx_cnt = 0; // 存放待发送的dmx512信息包的数据帧个数
-u16 dmx512_rx_cnt = 0; // 存放接收的dmx512信息包的数据帧个数
+// u16 dmx512_tx_cnt = 0; // 存放待发送的dmx512信息包的数据帧个数
+// u16 dmx512_rx_cnt = 0; // 存放接收的dmx512信息包的数据帧个数
 u8 dmx512_txbuff[513]; // 存放待发送的dmx512信息包中的数据
-u8 dmx512_rxbuff[513]; // 存放接收到的dmx512信息包中的数据，每个数据刚好8位
+// u8 dmx512_rxbuff[513]; // 存放接收到的dmx512信息包中的数据，每个数据刚好8位
 
-static void uart_module_isr_hook(void *arg, u32 status);
+// static void uart_module_isr_hook(void *arg, u32 status); // 声明uart接收中断, 接收到数据后推送接收事件
 
 /**
  * @brief 串口初始化
@@ -44,19 +46,22 @@ static bool uart_module_init(void)
     struct uart_platform_data_t u_arg = {0};
     u_arg.tx_pin = MOD_UART_TX_PORT;
     u_arg.rx_pin = MOD_UART_RX_PORT;
-    u_arg.rx_cbuf = uart_module_cbuf;
-    u_arg.rx_cbuf_size = sizeof(uart_module_cbuf); // 设置SDK接口使用的缓存大小
+    // u_arg.rx_cbuf = uart_module_cbuf;
+    u_arg.rx_cbuf = NULL;
+    // u_arg.rx_cbuf_size = sizeof(uart_module_cbuf); // 设置SDK接口使用的缓存大小
+    u_arg.rx_cbuf_size = 0;                        // 设置SDK接口使用的缓存大小
     u_arg.frame_length = sizeof(uart_module_cbuf); // 设置帧大小, 当一次数据包长度达到这个数值时会中断推送UT_RX
     u_arg.rx_timeout = MOD_UART_TIMEOUT;           // 超时时间, 当接收数据后超过这个时间仍未接收到新数据时会中断推送UT_RX_OT
-    u_arg.isr_cbfun = uart_module_isr_hook;        // 推送中断函数
+    // u_arg.isr_cbfun = uart_module_isr_hook;        // 推送中断函数
+    u_arg.isr_cbfun = NULL; // 推送中断函数
     u_arg.baud = MOD_UART_BAUDRATE;
     u_arg.is_9bit = 1; // 9个数据位
 
     uart_bus = uart_dev_open(&u_arg);
     if (uart_bus != NULL)
     {
-        // gpio_set_hd(MOD_UART_TX_PORT, 1);
-        // gpio_set_hd0(MOD_UART_TX_PORT, 1);
+        gpio_set_hd(MOD_UART_TX_PORT, 1);
+        gpio_set_hd0(MOD_UART_TX_PORT, 1);
         return true;
     }
     else
@@ -78,11 +83,18 @@ static bool uart_module_close(void)
     return false;
 }
 
-void uart_module_event_deal(u8 *buff, u16 len)
+static void uart_module_event_deal(u8 *buff, u16 len)
 {
     // 此处数据处理
+
+    for (u16 i = 0; i < len; i++)
+    {
+        printf(" slot_%d 0x%x ", i, buff[i]);
+    }
+    printf("\n");
 }
 
+#if 0  // uart串口接收事件响应
 /**
  * @brief uart串口接收事件响应
  * @note 获取完成的整个buff在这里处理
@@ -120,9 +132,11 @@ void uart_module_event_handler(struct sys_event *e)
         }
     }
 }
-SYS_EVENT_HANDLER(SYS_DEVICE_EVENT, uart_module_event_handler, 2);
+// SYS_EVENT_HANDLER(SYS_DEVICE_EVENT, uart_module_event_handler, 2);
 // 将该函数加入SYS_DEVICE_EVENT队列中, 当队列中有新的推送消息时, 会进入这里进行判断
+#endif // uart串口接收事件响应
 
+#if 0  // uart接收中断, 接收到数据后推送接收事件
 /**
  * @brief uart接收中断, 接收到数据后推送接收事件
  */
@@ -155,6 +169,7 @@ static void uart_module_isr_hook(void *arg, u32 status)
         /* gpio_change(0); */
     }
 }
+#endif // uart接收中断, 接收到数据后推送接收事件
 
 /**
  * @brief 发送数据的接口
@@ -168,73 +183,44 @@ static void uart_module_tx(u8 *buf, u16 len)
     }
 }
 
-// // 发送Mark TimeBetween Packets，MTBP，间隔两个信息包的标志位
-// void __dmx512_send_mtbp(void)
-// {
-//     uart_module_close();                        // 关闭串口
-//     gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
-// }
-
-// // 发送BREAK中断位+MAB
-// void __dmx512_send_break(void)
-// {
-//     gpio_set_output_value(MOD_UART_TX_PORT, 0); // IO输出低电平
-//     delay_us(88);
-//     gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
-//     delay_us(8);
-// }
-
-// // 发送dmx512的数据帧
-// void __dmx512_send_data_packet(void)
-// {
-//     // u16 i = dmx512_tx_cnt;
-//     for (u16 i = 0; i < dmx512_tx_cnt; i++)
-//     {
-//         uart_module_tx(dmx512_txbuff + i, 1);
-//     }
-// }
-
-// void dmx512_config(void)
-// {
-//     uart_module_init();
-// }
+void dmx512_config(void)
+{
+    uart_module_init();
+}
 
 // 发送dmx512数据包
 void dmx512_send_start(void)
 {
-    dmx512_txbuff[0] = 0;
+    // dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
     // 1. 发送MTBP
-    // uart_module_close();                        // 关闭串口
-    // gpio_set_direction(IO_PORTB_01, 0);         //
-    gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
-    // delay_us(200);
-    delay_200us();
+    // gpio_set_direction(MOD_UART_TX_PORT, 0); // IO配置为输出模式
+    // gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
+    // delay_200us();
 
     // 2. 发送BREAK
     gpio_set_output_value(MOD_UART_TX_PORT, 0); // IO输出低电平
-    // delay_us(88);
     delay_88us();
+    // gpio_set_direction(MOD_UART_TX_PORT, 1);
+    // delay_200us();
+
     // 3. 发送MAB
     // gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
-    // // delay_us(8);
     // delay_8us();
 
     // 4. 发送SC
-    uart_module_init(); // 打开串口
-                        // uart_module_tx(&dmx512_txbuff, 1);
-
+    uart_module_init(); // 打开串口（这一步会把IO电平拉高，约31.5us，相当于发送了MAB）
     // // 5. 发送数据
-
-    // for (u16 i = 0; i < 512; i++)
+    // for (u16 i = 0; i < dmx512_tx_cnt; i++)
     // {
-    uart_module_tx(&dmx512_txbuff, 513);
+    uart_module_tx(dmx512_txbuff, 513);
     // }
 
     // 6. 发送MTBP
-    uart_module_close(); // 关闭串口
-    // gpio_set_direction(IO_PORTB_01, 0); // 
+    uart_module_close();                        // 关闭串口
     gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
-    // delay_us(200);
+    gpio_set_pull_down(MOD_UART_TX_PORT, 0);    // 关闭下拉
+    gpio_set_pull_up(MOD_UART_TX_PORT, 0);      // 关闭上拉
+    gpio_set_direction(MOD_UART_TX_PORT, 0);    // IO配置为输出模式(不重新配置为输出模式，在关闭串口后就直接输出高电平，IO为低电平，不会输出高电平)
     delay_200us();
 }
 

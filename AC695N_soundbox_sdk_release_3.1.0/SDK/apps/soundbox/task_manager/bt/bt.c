@@ -953,21 +953,20 @@ int bt_key_event_handler(struct sys_event *event)
         // delay_88us();
         // gpio_set_output_value(IO_PORTB_01, 1); //
         // delay_88us();
+
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 0); //
+        // delay_200us();
+        // gpio_set_output_value(IO_PORTB_01, 1); //
+        // delay_200us();
         // local_irq_enable();
 
-        local_irq_disable();
-        // gpio_set_output_value(IO_PORTB_01, 0); //
-        // delay_200us();
-        // gpio_set_output_value(IO_PORTB_01, 1); //
-        // delay_200us();
-        // gpio_set_output_value(IO_PORTB_01, 0); //
-        // delay_200us();
-        // gpio_set_output_value(IO_PORTB_01, 1); //
-        // delay_200us();
-
+        // local_irq_disable();
         dmx512_send_start();
-
-        local_irq_enable();
+        // local_irq_enable();
 
         break;
     case KEY_MUSIC_NEXT:
@@ -1182,6 +1181,10 @@ static void bt_tone_play_end_callback(void *priv, int flag)
    @note
 */
 /*----------------------------------------------------------------------------*/
+void test11(void *priv)
+{
+    app_task_put_key_msg(KEY_MUSIC_PREV, 0); // 推送按键消息
+}
 void app_bt_task()
 {
     int res;
@@ -1191,8 +1194,16 @@ void app_bt_task()
     bt_task_init(); // 初始化变量、时钟、显示(未进行协议栈初始化)
 
     memset(dmx512_txbuff, 0xAA, 513);
-    gpio_set_direction(IO_PORTB_01, 0);    //
-    gpio_set_output_value(IO_PORTB_01, 1); //
+    dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
+
+    gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
+    gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); //
+
+    // user_test_uart_config(); // 接收dmx512使用到的串口
+
+    // dmx512_config(); // 这里不用配置dmx512使用到的串口，发送dmx512协议的数据要先使用IO输出高/低电平，再使用串口
+
+    sys_timer_add(NULL, test11, 1000); // 发送板使用到的程序
 
 #if TCFG_TONE2TWS_ENABLE
     extern void tone2tws_bt_task_start(u8 tone_play);

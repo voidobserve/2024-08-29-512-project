@@ -719,6 +719,7 @@ c_SRC_FILES := \
 	cpu/br23/ui_driver/ui_common.c \
 	apps/user_apps/hardware/delay.c \
 	apps/user_apps/dmx512.c \
+	# apps/user_apps/hardware/uart.c\
 
 # 需要编译的 .S 文件
 S_SRC_FILES := \
