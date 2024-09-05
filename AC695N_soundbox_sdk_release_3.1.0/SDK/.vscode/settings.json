@@ -16,6 +16,11 @@
         "freertos.h": "c",
         "freertosconfig.h": "c",
         "list.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "hardware_pwm_led.h": "c",
+        "mcpwm.h": "c",
+        "timer.h": "c",
+        "irflt.h": "c",
+        "rf_433decode.h": "c"
     }
 }

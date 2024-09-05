@@ -965,7 +965,7 @@ int bt_key_event_handler(struct sys_event *event)
         // local_irq_enable();
 
         // local_irq_disable();
-        dmx512_send_start();
+        // dmx512_send_start();
         // local_irq_enable();
 
         break;
@@ -1193,17 +1193,19 @@ void app_bt_task()
 
     bt_task_init(); // 初始化变量、时钟、显示(未进行协议栈初始化)
 
-    memset(dmx512_txbuff, 0xAA, 513);
-    dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
+    // memset(dmx512_txbuff, 0xA5, 513);
+    // dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
 
-    gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
-    gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); //
+    // gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
+    // gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); //
+    //  dmx512_rx_config(); // 配置专门用于接收dmx512数据包的串口
 
-    // user_test_uart_config(); // 接收dmx512使用到的串口
+    // sys_timer_add(NULL, test11, 1000); // 发送板使用到的程序
 
-    // dmx512_config(); // 这里不用配置dmx512使用到的串口，发送dmx512协议的数据要先使用IO输出高/低电平，再使用串口
+    // hardware_pwm_led_config();
+    // hardware_mcpwm_led_config();
 
-    sys_timer_add(NULL, test11, 1000); // 发送板使用到的程序
+    rf_config();
 
 #if TCFG_TONE2TWS_ENABLE
     extern void tone2tws_bt_task_start(u8 tone_play);

@@ -1,3 +1,4 @@
+// 工程中有同名的头文件，不能直接使用
 #ifndef __UART_H
 #define __UART_H
 

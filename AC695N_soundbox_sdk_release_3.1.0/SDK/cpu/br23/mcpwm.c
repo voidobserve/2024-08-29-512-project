@@ -517,7 +517,7 @@ void io_ext_interrupt_test(void)
 /**
  * @param JL_TIMERx : JL_TIMER0/1/2/3/4/5
  * @param fre : 频率，单位Hz，不小于95
- * @param duty : 初始占空比，0~10000对应0~100%
+ * @param duty : 初始占空比，0~10000对应0~100%（实际上占空比 == duty / fre，由这两个传参共同决定）
  * @param port : pwm脚，可选硬件脚，也可选非硬件脚。(建议选择硬件引脚)
  * @param output_ch : 映射通道，当pwm脚选择非硬件脚时有效，这时我们给他分配output_channel 0/1/2
  */

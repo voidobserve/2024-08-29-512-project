@@ -719,6 +719,8 @@ c_SRC_FILES := \
 	cpu/br23/ui_driver/ui_common.c \
 	apps/user_apps/hardware/delay.c \
 	apps/user_apps/dmx512.c \
+	apps/user_apps/hardware/hardware_pwm_led.c \
+	apps/user_apps/rf_decode.c \
 	# apps/user_apps/hardware/uart.c\
 
 # 需要编译的 .S 文件

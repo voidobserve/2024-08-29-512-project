@@ -268,4 +268,6 @@ objs/apps/soundbox/task_manager/bt/bt.c.o: \
   apps/common/third_party_profile/jieli\tuya_multi/tuya_le_multi_common.h \
   apps/common/third_party_profile/jieli\multi_demo/le_multi_common.h \
   include_lib/system\debug.h apps/user_apps\user_config.h \
-  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h
