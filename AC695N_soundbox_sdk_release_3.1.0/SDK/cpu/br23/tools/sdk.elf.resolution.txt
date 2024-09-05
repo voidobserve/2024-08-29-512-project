@@ -1914,6 +1914,7 @@ objs/apps/soundbox/common/init.c.o
 -r=objs/apps/soundbox/common/init.c.o,os_init,l
 -r=objs/apps/soundbox/common/init.c.o,setup_arch,l
 -r=objs/apps/soundbox/common/init.c.o,task_create,l
+-r=objs/apps/soundbox/common/init.c.o,rf_decode_task_handler,l
 -r=objs/apps/soundbox/common/init.c.o,os_start,l
 -r=objs/apps/soundbox/common/init.c.o,local_irq_enable,l
 -r=objs/apps/soundbox/common/init.c.o,app_main,l
@@ -2929,6 +2930,7 @@ objs/apps/soundbox/task_manager/bt/bt.c.o
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_event_filter_before,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_event_filter_after,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_music_pp,l
+-r=objs/apps/soundbox/task_manager/bt/bt.c.o,dmx512_send_test,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_music_next,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_vol_up,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_key_vol_down,l
@@ -2948,7 +2950,9 @@ objs/apps/soundbox/task_manager/bt/bt.c.o
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,app_bt_task,pl
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,ui_update_status,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_task_init,l
--r=objs/apps/soundbox/task_manager/bt/bt.c.o,rf_config,l
+-r=objs/apps/soundbox/task_manager/bt/bt.c.o,gpio_set_direction,l
+-r=objs/apps/soundbox/task_manager/bt/bt.c.o,gpio_set_output_value,l
+-r=objs/apps/soundbox/task_manager/bt/bt.c.o,hardware_pwm_led_config,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,get_tws_background_connected_flag,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,tone_play_with_callback_by_name,l
 -r=objs/apps/soundbox/task_manager/bt/bt.c.o,bt_task_start,l
@@ -4965,6 +4969,7 @@ objs/apps/user_apps/dmx512.c.o
 -r=objs/apps/user_apps/dmx512.c.o,gpio_set_direction,l
 -r=objs/apps/user_apps/dmx512.c.o,delay_200us,l
 -r=objs/apps/user_apps/dmx512.c.o,dmx512_transpond,pl
+-r=objs/apps/user_apps/dmx512.c.o,dmx512_send_test,pl
 -r=objs/apps/user_apps/dmx512.c.o,sys_event_notify,l
 -r=objs/apps/user_apps/dmx512.c.o,gpio_set_hd,l
 -r=objs/apps/user_apps/dmx512.c.o,gpio_set_hd0,l
@@ -4974,8 +4979,6 @@ objs/apps/user_apps/dmx512.c.o
 objs/apps/user_apps/hardware/hardware_pwm_led.c.o
 -r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,hardware_pwm_led_config,pl
 -r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,timer_pwm_init,l
--r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,os_time_dly,l
--r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,set_timer_pwm_duty,l
 -r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,hardware_pwm_led_y_on,pl
 -r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,hardware_pwm_led_w_on,pl
 -r=objs/apps/user_apps/hardware/hardware_pwm_led.c.o,hardware_pwm_led_y_off,pl
@@ -4987,6 +4990,7 @@ objs/apps/user_apps/rf_decode.c.o
 -r=objs/apps/user_apps/rf_decode.c.o,local_irq_disable,l
 -r=objs/apps/user_apps/rf_decode.c.o,gpio_read,l
 -r=objs/apps/user_apps/rf_decode.c.o,printf,l
+-r=objs/apps/user_apps/rf_decode.c.o,os_taskq_post_msg,l
 -r=objs/apps/user_apps/rf_decode.c.o,local_irq_enable,l
 -r=objs/apps/user_apps/rf_decode.c.o,set_rf_clk,pl
 -r=objs/apps/user_apps/rf_decode.c.o,clk_get,l
@@ -4996,6 +5000,8 @@ objs/apps/user_apps/rf_decode.c.o
 -r=objs/apps/user_apps/rf_decode.c.o,gpio_set_pull_down,l
 -r=objs/apps/user_apps/rf_decode.c.o,gpio_set_die,l
 -r=objs/apps/user_apps/rf_decode.c.o,gpio_set_direction,l
+-r=objs/apps/user_apps/rf_decode.c.o,rf_decode_task_handler,pl
+-r=objs/apps/user_apps/rf_decode.c.o,os_taskq_pend,l
 -r=objs/apps/user_apps/rf_decode.c.o,rf_data,pl
 include_lib/liba/br23/cpu.a.llvm.18034.crc16.c
 -r=include_lib/liba/br23/cpu.a.llvm.18034.crc16.c,__crc16_mutex_init,pl

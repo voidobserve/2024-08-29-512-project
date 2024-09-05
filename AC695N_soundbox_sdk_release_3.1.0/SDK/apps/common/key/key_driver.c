@@ -188,6 +188,9 @@ _notify:
         return;
     }
 #endif
+
+    if (1)
+    {
     key_value &= ~BIT(7);  //BIT(7) 用作按键特殊处理的标志
     e.type = SYS_KEY_EVENT;
     e.u.key.init = 1;
@@ -208,6 +211,12 @@ _notify:
         audio_key_tone_play();
 #endif
     }
+    }
+    else if (1)
+    {
+        // 如果是rf遥控器的按键，向检测rf遥控器按键的线程发送消息，而不是发送系统事件
+    }
+
 _scan_end:
     scan_para->last_key = cur_key_value;
     return;

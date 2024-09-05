@@ -288,10 +288,10 @@ void dmx512_send_start(void)
     // }
 
     // 6. 发送MTBP
-    dmx512_tx_close();                          // 关闭串口
     gpio_set_output_value(MOD_UART_TX_PORT, 1); // IO输出高电平
     gpio_set_pull_down(MOD_UART_TX_PORT, 0);    // 关闭下拉
     gpio_set_pull_up(MOD_UART_TX_PORT, 0);      // 关闭上拉
+    dmx512_tx_close();                          // 关闭串口
     gpio_set_direction(MOD_UART_TX_PORT, 0);    // IO配置为输出模式(不重新配置为输出模式，在关闭串口后就直接输出高电平，IO为低电平，不会输出高电平)
     delay_200us();
 }
@@ -306,4 +306,54 @@ void dmx512_transpond(void)
 {
     memcpy(dmx512_txbuff, (u8 *)uart_module_rxbuf + 1, 513); // 将串口接收缓冲区的数据拷贝至dmx512的发送缓冲区（不拷贝第0个数据帧，那是将一段低电平识别成了串口的信号）
     dmx512_send_start();
+}
+
+
+
+// 定义dmx512数据包中的信息：
+#define DMX512_DEVICE_OFF 0xA5 // 0xA5 表示关闭设备
+#define DMX512_DEVICE_ON  0x5A // 0x5A 表示开启设备
+// 测试用，定义控制位的状态
+enum
+{
+    DMX512_CONTROL_SUB1_OFF = 0x01, // 关闭从机1的灯
+    DMX512_CONTROL_SUB2_OFF = 0x02, // 关闭从机2的灯
+
+    DMX512_CONTROL_SUB1_ON = 0x04, // 点亮从机1的灯
+    DMX512_CONTROL_SUB2_ON = 0x08, // 点亮从机2的灯
+};
+// dmx512数据包发送测试
+void dmx512_send_test(void)
+{
+    /*
+        控制从机设备的标志位
+    */
+    static u8 control_flag = DMX512_CONTROL_SUB1_OFF | DMX512_CONTROL_SUB2_OFF;
+
+    if ((DMX512_CONTROL_SUB1_OFF | DMX512_CONTROL_SUB2_OFF) == control_flag)
+    {
+        dmx512_txbuff[1] = DMX512_DEVICE_OFF;
+        dmx512_txbuff[2] = DMX512_DEVICE_ON;
+        control_flag = DMX512_CONTROL_SUB1_OFF | DMX512_CONTROL_SUB2_ON;
+    }
+    else if ((DMX512_CONTROL_SUB1_OFF | DMX512_CONTROL_SUB2_ON) == control_flag)
+    {
+        dmx512_txbuff[1] = DMX512_DEVICE_ON; 
+        dmx512_txbuff[2] = DMX512_DEVICE_OFF; 
+        control_flag = DMX512_CONTROL_SUB1_ON | DMX512_CONTROL_SUB2_OFF;
+    }
+    else if ((DMX512_CONTROL_SUB1_ON | DMX512_CONTROL_SUB2_OFF) == control_flag)
+    {
+        dmx512_txbuff[1] = DMX512_DEVICE_ON; //
+        dmx512_txbuff[2] = DMX512_DEVICE_ON; // 
+        control_flag = DMX512_CONTROL_SUB1_ON | DMX512_CONTROL_SUB2_ON;
+    }
+    else if ((DMX512_CONTROL_SUB1_ON | DMX512_CONTROL_SUB2_ON) == control_flag)
+    {
+        dmx512_txbuff[1] = DMX512_DEVICE_OFF; //
+        dmx512_txbuff[2] = DMX512_DEVICE_OFF; //
+        control_flag = DMX512_CONTROL_SUB1_OFF | DMX512_CONTROL_SUB2_OFF;
+    }
+
+    dmx512_send_start(); // 发送数据包
 }

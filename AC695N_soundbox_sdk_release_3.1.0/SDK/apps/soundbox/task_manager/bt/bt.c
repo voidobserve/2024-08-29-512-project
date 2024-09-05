@@ -968,6 +968,8 @@ int bt_key_event_handler(struct sys_event *event)
         // dmx512_send_start();
         // local_irq_enable();
 
+        dmx512_send_test(); // 每次按下按键，发送不同内容的数据包
+
         break;
     case KEY_MUSIC_NEXT:
         log_info("    KEY_MUSIC_NEXT \n");
@@ -1123,7 +1125,7 @@ static int bt_sys_event_handler(struct sys_event *event)
     switch (event->type)
     {
     case SYS_KEY_EVENT:
-        ret = bt_key_event_handler(event);
+        ret = bt_key_event_handler(event); // 按键事件处理
         break;
     case SYS_BT_EVENT:
         ret = bt_sys_event_office(event);
@@ -1196,16 +1198,16 @@ void app_bt_task()
     // memset(dmx512_txbuff, 0xA5, 513);
     // dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
 
-    // gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
-    // gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); //
+    gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
+    gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); // 设置为高电平
     //  dmx512_rx_config(); // 配置专门用于接收dmx512数据包的串口
 
     // sys_timer_add(NULL, test11, 1000); // 发送板使用到的程序
 
-    // hardware_pwm_led_config();
+    hardware_pwm_led_config();
     // hardware_mcpwm_led_config();
 
-    rf_config();
+    // rf_config();
 
 #if TCFG_TONE2TWS_ENABLE
     extern void tone2tws_bt_task_start(u8 tone_play);

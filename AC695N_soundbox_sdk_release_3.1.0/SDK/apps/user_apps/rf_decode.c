@@ -1,8 +1,8 @@
 #include "rf_decode.h"
 
-#define RF_TIME_REG JL_TIMER3
-#define RF_IRQ_TIME_IDX IRQ_TIME3_IDX
-#define RF_RECV_PIN IO_PORTB_05
+#define RF_TIME_REG JL_TIMER3         // 使用到的定时器
+#define RF_IRQ_TIME_IDX IRQ_TIME3_IDX // 使用到的定时器对应的中断号
+#define RF_RECV_PIN RF_DECODE_PIN     // 接收RF信号的引脚
 // #define RF_FINISH_WAIT 1
 
 static const u16 timer_div[] = {
@@ -25,14 +25,47 @@ static const u16 timer_div[] = {
 };
 
 // static u32 rf_data = 0; // 倒序存放接收到的rf数据
-volatile u32 rf_data = 0; // 倒序存放接收到的rf数据
+volatile u32 rf_data = 0;     // 倒序存放接收到的rf数据
+
+volatile u32 rf_addr = 0; // 存放遥控器的地址 (后续可能要改成支持多个遥控器，可能要换成数组来存放)
+volatile u8 rf_key = 0; // 
+
+// volatile u8 rf_recv_flag = 0; // 标志位，表示是否完成一次rf数据的接收，0--未接收，1--接收
+
+
+u8 rf_get_key_value(void);
+//按键驱动扫描参数列表
+struct key_driver_para rfkey_scan_para = {
+    .scan_time 	  	  = 10,				//按键扫描频率, 单位: ms
+    .last_key 		  = NO_KEY,  		//上一次get_value按键值, 初始化为NO_KEY;
+    .filter_time  	  = 2,				//按键消抖延时;
+    .long_time 		  = 75,  			//按键判定长按数量
+    .hold_time 		  = (75 + 15),  	//按键判定HOLD数量
+    .click_delay_time = 20,				//按键被抬起后等待连击延时数量
+    .key_type		  = KEY_DRIVER_TYPE_AD,
+    .get_value 		  = rf_get_key_value,
+};
+u8 rf_get_key_value(void)
+{
+    u8 i;
+    u16 ad_data;
+
+    ad_data = adc_get_value(__this->ad_channel);
+    /* printf("ad_value = %d \n", ad_data); */
+    for (i = 0; i < ADKEY_MAX_NUM; i++) {
+        if ((ad_data <= __this->ad_value[i]) && (__this->ad_value[i] < 0x3ffL)) {
+            return __this->key_value[i];
+        }
+    }
+    return NO_KEY;
+}
 
 ___interrupt
     AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率
     void
     timer_rf_isr(void)
 {
-    local_irq_disable(); // 需要极准确的定时效果时开启
+    local_irq_disable();         // 需要极准确的定时效果时开启
     RF_TIME_REG->CON |= BIT(14); // 清除中断标志
 
     static bool bit_end;
@@ -114,6 +147,14 @@ ___interrupt
             {
 
                 printf("rf_data:%06x\n", rf_data);
+                printf("%s , %d\n", __FUNCTION__, __LINE__);
+                os_taskq_post_msg("rf_decode", 1, MSG_RF_RECV_FLAG);
+
+                // 存放地址和键值
+
+
+                printf("%s , %d\n", __FUNCTION__, __LINE__);
+                // rf_recv_flag = 1;
 
                 flagsuccess = 1; //
             }
@@ -175,7 +216,7 @@ void set_rf_clk(void)
     RF_TIME_REG->CNT = 0;
     RF_TIME_REG->PRD = prd_cnt; // 1ms
 
-    request_irq(RF_IRQ_TIME_IDX, 7, timer_rf_isr, 0);
+    request_irq(RF_IRQ_TIME_IDX, 7, timer_rf_isr, 0); // 7，最高优先级，在时序性要求较高时使用
     // RF_TIME_REG->CON = ((index << 4) | BIT(3) | BIT(1) | BIT(0));//选择osc时钟
     RF_TIME_REG->CON = ((index << 4) | BIT(3) | BIT(0)); // 选择osc时钟
     // JL_IOMAP->CON0 |= BIT(21);//这里已选了timer5,时钟源选io信号里的pll_12m,不是所有的timer都可选pll,修改请看文档
@@ -198,5 +239,61 @@ void rf_config(void)
     gpio_set_die(RF_RECV_PIN, 1);       // 普通输入、数字输入
     gpio_set_direction(RF_RECV_PIN, 1); // 输入模式
 
-    set_rf_clk();
+    set_rf_clk(); // 配置扫描rf信号的定时器
 }
+
+void rf_decode_task_handler(void *p)
+{
+    u8 ret = 0;
+    int msg[16] = {0};
+
+    rf_config();
+
+
+
+    while (1)
+    {
+        printf("%s , %d\n", __FUNCTION__, __LINE__);
+        ret = os_taskq_pend("rf_decode", msg, ARRAY_SIZE(msg));
+        printf("%s , %d\n", __FUNCTION__, __LINE__);
+        // printf("ret:  %d\n", (int)ret);
+        if (ret != OS_TASKQ)
+        {
+            continue;
+        }
+        if (msg[0] != Q_MSG)
+        {
+            continue;
+        }
+
+        switch (ret)
+        {
+        case MSG_RF_RECV_FLAG:
+            printf("get msg rf_recv\n");
+            break;
+
+        default:
+            break;
+        }
+
+        // os_time_dly(10);
+    }
+}
+
+// void fun(void *p)
+// {
+
+//     while (1)
+//     {
+//         if (rf_recv_flag)
+//         {
+//             rf_recv_flag = 0;
+//             printf("%s , %d\n", __FUNCTION__, __LINE__);
+//             os_taskq_post_msg("rf_decode", 1, MSG_RF_RECV_FLAG);
+//             printf("%s , %d\n", __FUNCTION__, __LINE__);
+//         }
+
+//         os_time_dly(1);
+//     }
+// }
+

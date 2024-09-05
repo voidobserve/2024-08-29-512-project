@@ -3,12 +3,15 @@
 
 
 /*任务列表, 注意:stack_size设置为32*n*/
-const struct task_info task_info_table[] = {
+const struct task_info task_info_table[] = {  
     // {"app_core",            1,     2048,  768  },
     {"app_core",            1,     896,  768  },
     {"sys_event",           6,     256,   0    },
     {"btctrler",            4,     512,   384  },
     {"btencry",             1,     512,   128  },
+
+    {"rf_decode",           3,     128,    128},
+
 
 #if TCFG_USER_TWS_ENABLE
     {"tws",                 5,     512,   128  },

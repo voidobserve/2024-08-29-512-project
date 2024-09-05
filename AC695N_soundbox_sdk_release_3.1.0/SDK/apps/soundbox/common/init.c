@@ -10,8 +10,6 @@
 #include "update_loader_download.h"
 
 #include "user_config.h"
-#include "dmx512.h"
-
 
 extern void setup_arch();
 extern int audio_dec_init();
@@ -243,7 +241,8 @@ int main()
     board_early_init();
 
     task_create(app_task_handler, NULL, "app_core");
-    // task_create(io_task_handler, NULL, "io_task");
+    task_create(rf_decode_task_handler, NULL, "rf_decode");
+    // task_create(fun, NULL, "test_fun");
 
     os_start();
 

@@ -8,11 +8,11 @@ void hardware_pwm_led_config(void)
     timer_pwm_init(JL_TIMER0, 10000, 994, IO_PORTA_05, 0);
     timer_pwm_init(JL_TIMER1, 10000, 994, IO_PORTA_12, 0);
 
-    os_time_dly(1000);
-    set_timer_pwm_duty(JL_TIMER0, 0); // 0%占空比（不知道实际情况会不会让灯微微点亮）
+    // os_time_dly(1000);
+    // set_timer_pwm_duty(JL_TIMER0, 0); // 0%占空比（不知道实际情况会不会让灯微微点亮）
 
-    os_time_dly(555); // 延时基本单位：10ms
-    set_timer_pwm_duty(JL_TIMER0, 195);
+    // os_time_dly(555); // 延时基本单位：10ms
+    // set_timer_pwm_duty(JL_TIMER0, 195);
 }
 
 // 点亮黄灯
