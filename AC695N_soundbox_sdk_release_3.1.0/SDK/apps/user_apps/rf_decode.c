@@ -24,41 +24,13 @@ static const u16 timer_div[] = {
     /*1111*/ 128 * 256,
 };
 
-// static u32 rf_data = 0; // 倒序存放接收到的rf数据
-volatile u32 rf_data = 0;     // 倒序存放接收到的rf数据
+static u32 __rf_data = 0; // 存放接收到的rf数据（在定时器中断中使用）
+volatile u32 rf_data = 0; // 存放接收到的rf数据
 
 volatile u32 rf_addr = 0; // 存放遥控器的地址 (后续可能要改成支持多个遥控器，可能要换成数组来存放)
-volatile u8 rf_key = 0; // 
+volatile u8 rf_key = 0;   //
 
 // volatile u8 rf_recv_flag = 0; // 标志位，表示是否完成一次rf数据的接收，0--未接收，1--接收
-
-
-u8 rf_get_key_value(void);
-//按键驱动扫描参数列表
-struct key_driver_para rfkey_scan_para = {
-    .scan_time 	  	  = 10,				//按键扫描频率, 单位: ms
-    .last_key 		  = NO_KEY,  		//上一次get_value按键值, 初始化为NO_KEY;
-    .filter_time  	  = 2,				//按键消抖延时;
-    .long_time 		  = 75,  			//按键判定长按数量
-    .hold_time 		  = (75 + 15),  	//按键判定HOLD数量
-    .click_delay_time = 20,				//按键被抬起后等待连击延时数量
-    .key_type		  = KEY_DRIVER_TYPE_AD,
-    .get_value 		  = rf_get_key_value,
-};
-u8 rf_get_key_value(void)
-{
-    u8 i;
-    u16 ad_data;
-
-    ad_data = adc_get_value(__this->ad_channel);
-    /* printf("ad_value = %d \n", ad_data); */
-    for (i = 0; i < ADKEY_MAX_NUM; i++) {
-        if ((ad_data <= __this->ad_value[i]) && (__this->ad_value[i] < 0x3ffL)) {
-            return __this->key_value[i];
-        }
-    }
-    return NO_KEY;
-}
 
 ___interrupt
     AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率
@@ -108,12 +80,16 @@ ___interrupt
             bit_end = 0;
             if (Pluse_L_cnt >= MIN_PULSE)
             {
-                rf_data >>= 1;
-                // rf_data <<= 1;
+                // __rf_data >>= 1;
+                __rf_data <<= 1;
                 if (Pluse_H_cnt > Pluse_L_cnt)
                 {
-                    rf_data |= 0x00800000;
-                    // rf_data |= 0x01;
+                    // __rf_data |= 0x00800000;
+                    __rf_data |= 0x01;
+                }
+                else
+                {
+                    __rf_data &= ~(0x01);
                 }
                 Pluse_H_cnt = 0;
             }
@@ -141,19 +117,19 @@ ___interrupt
             if (rf_bit_cnt != 25)
             {
                 flagerror = 1;
+                // __rf_data = 0xFFFFFFFF; 
                 // printf("rf decode err \n");
             }
             else // 解码成功
             {
-
-                printf("rf_data:%06x\n", rf_data);
-                printf("%s , %d\n", __FUNCTION__, __LINE__);
+                __rf_data &= 0xFFFFFF; // 只保留低24位的数据，清除之前的数据残留
+                // printf("rf_data:%06x\n", __rf_data);
+                // printf("%s , %d\n", __FUNCTION__, __LINE__);
                 os_taskq_post_msg("rf_decode", 1, MSG_RF_RECV_FLAG);
 
                 // 存放地址和键值
 
-
-                printf("%s , %d\n", __FUNCTION__, __LINE__);
+                // printf("%s , %d\n", __FUNCTION__, __LINE__);
                 // rf_recv_flag = 1;
 
                 flagsuccess = 1; //
@@ -249,13 +225,12 @@ void rf_decode_task_handler(void *p)
 
     rf_config();
 
-
-
     while (1)
     {
-        printf("%s , %d\n", __FUNCTION__, __LINE__);
+        // printf("%s , %d\n", __FUNCTION__, __LINE__);
         ret = os_taskq_pend("rf_decode", msg, ARRAY_SIZE(msg));
-        printf("%s , %d\n", __FUNCTION__, __LINE__);
+        rf_data = __rf_data; // 收到消息后，更新一次收到的数据
+        // printf("%s , %d\n", __FUNCTION__, __LINE__);
         // printf("ret:  %d\n", (int)ret);
         if (ret != OS_TASKQ)
         {
@@ -279,21 +254,3 @@ void rf_decode_task_handler(void *p)
         // os_time_dly(10);
     }
 }
-
-// void fun(void *p)
-// {
-
-//     while (1)
-//     {
-//         if (rf_recv_flag)
-//         {
-//             rf_recv_flag = 0;
-//             printf("%s , %d\n", __FUNCTION__, __LINE__);
-//             os_taskq_post_msg("rf_decode", 1, MSG_RF_RECV_FLAG);
-//             printf("%s , %d\n", __FUNCTION__, __LINE__);
-//         }
-
-//         os_time_dly(1);
-//     }
-// }
-

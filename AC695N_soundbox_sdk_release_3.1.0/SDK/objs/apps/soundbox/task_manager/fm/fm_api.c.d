@@ -142,9 +142,13 @@ objs/apps/soundbox/task_manager/fm/fm_api.c.o: \
   apps/soundbox/board/br23/board_ac6083a_iap/board_ac6083a_iap_cfg.h \
   include_lib/btctrler\btcontroller_mode.h \
   apps/soundbox/include/user_cfg_id.h apps/common/usb\usb_common_def.h \
-  apps/soundbox/include\app_task.h apps/soundbox/include\tone_player.h \
-  cpu/br23\audio_config.h apps/common/audio\sine_make.h \
-  apps/soundbox/include\app_main.h apps/soundbox/include\ui_manage.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\tone_player.h cpu/br23\audio_config.h \
+  apps/common/audio\sine_make.h apps/soundbox/include\app_main.h \
+  apps/soundbox/include\ui_manage.h \
   include_lib/driver/cpu/br23\asm/pwm_led.h \
   include_lib/system/device\vm.h apps/soundbox/include\key_event_deal.h \
   include_lib/system\user_cfg.h \

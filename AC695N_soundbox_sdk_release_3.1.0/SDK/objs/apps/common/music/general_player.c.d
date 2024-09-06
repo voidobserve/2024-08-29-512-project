@@ -172,7 +172,10 @@ objs/apps/common/music/general_player.c.o: \
   apps/common/music/general_player.h \
   apps/soundbox/include/task_manager\bt/bt.h \
   apps/soundbox/include\common/dev_status.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   apps/common\file_operate/file_manager.h \
   cpu/br23\audio_dec/audio_dec_file.h \
   include_lib/media/media_develop\media/file_decoder.h \

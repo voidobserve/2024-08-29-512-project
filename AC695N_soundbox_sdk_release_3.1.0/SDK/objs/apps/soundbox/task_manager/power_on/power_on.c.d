@@ -174,5 +174,8 @@ objs/apps/soundbox/task_manager/power_on/power_on.c.o: \
   apps/soundbox/include\ui/ui_common.h \
   apps/soundbox/include\ui/led7/led7_driver.h \
   apps/soundbox/include\ui/lcd_seg/lcd_seg3x9_driver.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   apps/soundbox/include\key_event_deal.h include_lib/system\debug.h

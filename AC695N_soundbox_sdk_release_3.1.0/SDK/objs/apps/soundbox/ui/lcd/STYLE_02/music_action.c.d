@@ -98,45 +98,23 @@ objs/apps/soundbox/ui/lcd/STYLE_02/music_action.c.o: \
   apps/soundbox/include\ui/ui_api.h \
   apps/soundbox/include\ui/lcd_spi/lcd_drive.h \
   include_lib/driver/cpu/br23\asm/spi.h apps/soundbox/include\app_task.h \
-  include_lib/system\app_msg.h include_lib\system/timer.h \
-  apps/soundbox/include\key_event_deal.h cpu/br23\audio_config.h \
-  apps/soundbox/include\app_power_manage.h \
-  include_lib/driver/cpu/br23\asm/charge.h \
-  apps/soundbox/ui/lcd/STYLE_02/../lyrics_api.h \
-  include_lib/system/ui\ui/lyrics.h cpu/br23/audio_dec\audio_dec_file.h \
-  include_lib/driver/cpu/br23\asm/includes.h \
-  include_lib/driver/cpu/br23\asm/crc16.h \
-  include_lib/driver/cpu/br23\asm/clock.h \
-  include_lib/driver/cpu/br23\asm/clock_hw.h \
-  include_lib/driver/cpu/br23\asm/uart.h \
-  include_lib/driver\device/uart.h include_lib/system\device/device.h \
-  include_lib/system\device/ioctl_cmds.h \
-  include_lib/driver/cpu/br23\asm/uart_dev.h \
-  include_lib/driver/cpu/br23\asm/gpio.h \
-  include_lib/driver/cpu/br23\asm/spiflash.h \
-  include_lib/driver\device/spiflash.h \
-  include_lib/driver/cpu/br23\asm/power_interface.h \
-  include_lib/driver/cpu/br23\asm/efuse.h \
-  include_lib/driver/cpu/br23\asm/wdt.h \
-  include_lib/driver/cpu/br23\asm/timer.h \
-  include_lib/media/media_develop\media/includes.h \
-  include_lib/media/media_develop\media/audio_decoder.h \
-  include_lib/media/media_develop\media/audio_base.h \
-  include_lib\media/audio_stream.h include_lib/system\generic/includes.h \
+  include_lib/system\app_msg.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h include_lib/system\includes.h \
+  include_lib/system/init.h include_lib/system/spinlock.h \
+  include_lib/system/timer.h include_lib/system/wait.h \
+  include_lib/system/app_core.h include_lib/system/database.h \
+  include_lib/system/power_manage.h include_lib/system/syscfg_id.h \
+  include_lib/system/bank_switch.h include_lib/system/generic/includes.h \
   include_lib/system/generic/ascii.h include_lib/system/generic/gpio.h \
+  include_lib/driver/cpu/br23\asm/gpio.h \
   include_lib/system/generic/version.h include_lib/system/generic/lbuf.h \
-  include_lib\system/spinlock.h include_lib/system/generic/lbuf_lite.h \
+  include_lib/system/generic/lbuf_lite.h \
   include_lib/system/generic/circular_buf.h \
   include_lib/system/generic/index.h \
   include_lib/system/generic/debug_lite.h \
-  include_lib/media/media_develop\media/audio_encoder.h \
-  include_lib/media/media_develop\media/mixer.h \
-  include_lib/media/media_develop/media/application/audio_buf_sync.h \
-  include_lib\system/includes.h include_lib/system/init.h \
-  include_lib/system/wait.h include_lib/system/app_core.h \
-  include_lib/system/database.h include_lib/system/power_manage.h \
-  include_lib/system/syscfg_id.h include_lib/system/bank_switch.h \
   include_lib/system/device/includes.h \
+  include_lib/system/device/device.h \
+  include_lib/system\device/ioctl_cmds.h \
   include_lib/system/device/key_driver.h \
   include_lib/system/device/iokey.h include_lib/system/device/irkey.h \
   include_lib/system/device/adkey.h \
@@ -146,6 +124,19 @@ objs/apps/soundbox/ui/lcd/STYLE_02/music_action.c.o: \
   include_lib/driver/cpu/br23\asm/plcnt.h \
   include_lib/system/device/rdec_key.h \
   include_lib/driver/cpu/br23\asm/rdec.h \
+  include_lib/driver/cpu/br23\asm/includes.h \
+  include_lib/driver/cpu/br23\asm/crc16.h \
+  include_lib/driver/cpu/br23\asm/clock.h \
+  include_lib/driver/cpu/br23\asm/clock_hw.h \
+  include_lib/driver/cpu/br23\asm/uart.h \
+  include_lib/driver\device/uart.h \
+  include_lib/driver/cpu/br23\asm/uart_dev.h \
+  include_lib/driver/cpu/br23\asm/spiflash.h \
+  include_lib/driver\device/spiflash.h \
+  include_lib/driver/cpu/br23\asm/power_interface.h \
+  include_lib/driver/cpu/br23\asm/efuse.h \
+  include_lib/driver/cpu/br23\asm/wdt.h \
+  include_lib/driver/cpu/br23\asm/timer.h \
   include_lib/driver\device/sdio_host_init.h \
   include_lib/system/crypto_toolbox/crypto.h \
   include_lib/system/crypto_toolbox/endian.h \
@@ -157,7 +148,21 @@ objs/apps/soundbox/ui/lcd/STYLE_02/music_action.c.o: \
   include_lib/system/crypto_toolbox/ecdh.h \
   include_lib/system/crypto_toolbox/micro-ecc/uECC_new.h \
   include_lib/system/crypto_toolbox/aes_cmac.h \
-  include_lib/system/crypto_toolbox/rijndael.h \
+  include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\key_event_deal.h cpu/br23\audio_config.h \
+  apps/soundbox/include\app_power_manage.h \
+  include_lib/driver/cpu/br23\asm/charge.h \
+  apps/soundbox/ui/lcd/STYLE_02/../lyrics_api.h \
+  include_lib/system/ui\ui/lyrics.h cpu/br23/audio_dec\audio_dec_file.h \
+  include_lib/media/media_develop\media/includes.h \
+  include_lib/media/media_develop\media/audio_decoder.h \
+  include_lib/media/media_develop\media/audio_base.h \
+  include_lib\media/audio_stream.h \
+  include_lib/media/media_develop\media/audio_encoder.h \
+  include_lib/media/media_develop\media/mixer.h \
+  include_lib/media/media_develop/media/application/audio_buf_sync.h \
   include_lib/media/media_develop/media/cpu/br23\asm/cpu_includes.h \
   include_lib/media/media_develop/media/cpu/br23\asm/audio_adc.h \
   include_lib/media/media_develop/media/cpu/br23\asm/audio_linein.h \

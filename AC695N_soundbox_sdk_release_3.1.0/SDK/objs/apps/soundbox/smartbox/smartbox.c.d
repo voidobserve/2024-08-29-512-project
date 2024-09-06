@@ -99,17 +99,14 @@ objs/apps/soundbox/smartbox/smartbox.c.o: \
   C:/JL/pi32/pi32v2-include\sys/unistd.h include_lib\system/timer.h \
   include_lib/system\app_core.h include_lib\system/event.h \
   include_lib/system/generic/rect.h apps/soundbox/include\app_task.h \
-  include_lib/system\app_msg.h apps/soundbox/include\smartbox/event.h \
-  apps/soundbox/include\common/user_msg.h \
-  apps/soundbox/smartbox/smartbox_rcsp_manage.h \
-  apps/soundbox/smartbox/smartbox_setting_opt\smartbox_setting_opt.h \
-  include_lib\system/includes.h include_lib/system/init.h \
-  include_lib/system/spinlock.h include_lib/system/wait.h \
-  include_lib/system/database.h include_lib/system/fs/fs.h \
-  include_lib\system/sys_time.h include_lib/system/fs/fs_file_name.h \
-  include_lib/system/fs/sdfile.h include_lib/system/power_manage.h \
-  include_lib/system/syscfg_id.h include_lib/system/bank_switch.h \
-  include_lib/system/generic/includes.h \
+  include_lib/system\app_msg.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h include_lib/system\includes.h \
+  include_lib/system/init.h include_lib/system/spinlock.h \
+  include_lib/system/wait.h include_lib/system/database.h \
+  include_lib/system/fs/fs.h include_lib\system/sys_time.h \
+  include_lib/system/fs/fs_file_name.h include_lib/system/fs/sdfile.h \
+  include_lib/system/power_manage.h include_lib/system/syscfg_id.h \
+  include_lib/system/bank_switch.h include_lib/system/generic/includes.h \
   include_lib/system/generic/ascii.h include_lib/system/generic/gpio.h \
   include_lib/driver/cpu/br23\asm/gpio.h \
   include_lib/system/generic/version.h include_lib/system/generic/lbuf.h \
@@ -150,4 +147,10 @@ objs/apps/soundbox/smartbox/smartbox.c.o: \
   include_lib/system/crypto_toolbox/ecdh.h \
   include_lib/system/crypto_toolbox/micro-ecc/uECC_new.h \
   include_lib/system/crypto_toolbox/aes_cmac.h \
-  include_lib/system/crypto_toolbox/rijndael.h
+  include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\smartbox/event.h \
+  apps/soundbox/include\common/user_msg.h \
+  apps/soundbox/smartbox/smartbox_rcsp_manage.h \
+  apps/soundbox/smartbox/smartbox_setting_opt\smartbox_setting_opt.h

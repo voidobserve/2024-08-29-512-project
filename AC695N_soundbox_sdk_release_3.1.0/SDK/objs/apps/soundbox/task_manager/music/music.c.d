@@ -171,8 +171,12 @@ objs/apps/soundbox/task_manager/music/music.c.o: \
   cpu/br23\audio_effect/audio_dynamic_eq_demo.h \
   include_lib\media/dynamic_eq.h \
   cpu/br23\audio_effect/audio_eff_default_parm.h \
-  apps/soundbox/include\app_task.h apps/soundbox/include\app_main.h \
-  cpu/br23\clock_cfg.h apps/soundbox/include\app_action.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\app_main.h cpu/br23\clock_cfg.h \
+  apps/soundbox/include\app_action.h \
   apps/soundbox/include/common/user_msg.h apps/common/music\breakpoint.h \
   apps/soundbox/include\key_event_deal.h \
   apps/soundbox/include\tone_player.h cpu/br23\audio_config.h \

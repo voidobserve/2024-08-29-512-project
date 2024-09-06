@@ -126,4 +126,5 @@ objs/apps/soundbox/common/init.c.o: apps/soundbox/common/init.c \
   include_lib/update\update_loader_download.h \
   apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
   apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
-  apps/user_apps/rf_decode.h apps/user_apps/user_config.h
+  apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
+  apps/user_apps/rf_keyhandle.h

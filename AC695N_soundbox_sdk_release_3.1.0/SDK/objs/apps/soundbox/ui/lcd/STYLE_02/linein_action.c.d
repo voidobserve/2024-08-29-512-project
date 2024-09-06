@@ -197,7 +197,10 @@ objs/apps/soundbox/ui/lcd/STYLE_02/linein_action.c.o: \
   cpu/br23/audio_enc/audio_enc_recoder.h \
   cpu/br23/audio_enc/audio_recorder_mix.h \
   apps/soundbox/include\app_power_manage.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   apps/soundbox/include\key_event_deal.h \
   apps/soundbox/include/task_manager\linein/linein.h \
   include_lib/driver/cpu/br23\asm/charge.h \

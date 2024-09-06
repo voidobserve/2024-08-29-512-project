@@ -129,7 +129,10 @@ objs/apps/soundbox/common/dev_status.c.o: \
   include_lib/driver/cpu/br23\asm/usb.h \
   include_lib/driver/device\usb/ch9.h \
   include_lib/driver/device\usb/usb_phy.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   apps/soundbox/include\smartbox/smartbox.h \
   apps/soundbox/include\smartbox/config.h \
   apps/common/third_party_profile/jieli\le_common.h \

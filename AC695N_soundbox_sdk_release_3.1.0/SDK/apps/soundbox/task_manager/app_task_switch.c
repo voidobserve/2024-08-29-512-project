@@ -5,6 +5,8 @@
 #include "key_event_deal.h"
 #include "audio_recorder_mix.h"
 
+#include "user_config.h"
+
 ///模式配置表，这里可以配置切换模式的顺序，方案根据需求定义
 static const u8 app_task_list[] = {
 #if TCFG_APP_BT_EN
@@ -61,9 +63,19 @@ int app_key_event_remap(struct sys_event *e)
     case KEY_DRIVER_TYPE_AD:
     case KEY_DRIVER_TYPE_RTCVDD_AD:
 #if TCFG_ADKEY_ENABLE
+        // printf("%s %d\n", __FUNCTION__, __LINE__);
         msg = adkey_event_to_msg(app_curr_task, key);
 #endif
         break;
+
+// 注册rf按键类型的事件转换为消息的函数:
+#if RFKEY_ENABLE
+    case KEY_DRIVER_TYPE_RF: // 如果是rf遥控器按键事件
+        // printf("%s %d\n", __FUNCTION__, __LINE__);
+        msg = rfkey_event_to_msg(app_curr_task, key);
+    break;
+#endif
+
     case KEY_DRIVER_TYPE_IR:
 #if TCFG_IRKEY_ENABLE
         msg = irkey_event_to_msg(app_curr_task, key);
@@ -96,7 +108,7 @@ int app_key_event_remap(struct sys_event *e)
     e->u.key.value = 0;//
     return TRUE;//notify数据
 }
-SYS_EVENT_HANDLER(SYS_KEY_EVENT,  app_key_event_remap, 3);
+SYS_EVENT_HANDLER(SYS_KEY_EVENT, app_key_event_remap, 3);
 //*----------------------------------------------------------------------------*/
 /**@brief    模式退出检查
    @param    curr_task:当前模式

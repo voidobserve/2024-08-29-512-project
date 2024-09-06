@@ -204,7 +204,11 @@ objs/apps/soundbox/soundcard/peripheral.c.o: \
   include_lib/media/media_develop/media\application/audio_localtws.h \
   include_lib\media/localtws_decoder.h \
   apps/soundbox/include\common/user_msg.h \
-  apps/soundbox/include\app_task.h include_lib/driver/cpu/br23\asm/rtc.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  include_lib/driver/cpu/br23\asm/rtc.h \
   include_lib/driver/cpu/br23\asm/power/p33.h \
   apps/soundbox/include\key_event_deal.h \
   include_lib/media/media_develop/media\application/audio_output_dac.h \

@@ -172,6 +172,9 @@ objs/cpu/br23/audio_enc/audio_enc_recoder.c.o: \
   cpu/br23/audio_enc/audio_enc_recoder.h \
   cpu/br23/audio_enc/audio_recorder_mix.h \
   apps/soundbox/include\app_main.h apps/soundbox/include\app_task.h \
-  apps/common/audio\encode/encode_write.h cpu/br23\clock_cfg.h \
-  cpu/br23\audio_config.h \
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
+  apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
+  apps/user_apps/rf_keyhandle.h apps/common/audio\encode/encode_write.h \
+  cpu/br23\clock_cfg.h cpu/br23\audio_config.h \
   include_lib/media/media_develop/media\audio_track.h

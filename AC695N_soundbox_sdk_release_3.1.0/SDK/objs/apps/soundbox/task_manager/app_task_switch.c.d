@@ -67,10 +67,8 @@ objs/apps/soundbox/task_manager/app_task_switch.c.o: \
   include_lib/system/os/FreeRTOS/task.h \
   include_lib/system/os/FreeRTOS/list.h include_lib/system\app_msg.h \
   include_lib\system/event.h include_lib/system/generic/list.h \
-  include_lib/system/generic/rect.h \
-  include_lib/system/device\key_driver.h \
-  apps/soundbox/include\key_event_deal.h \
-  cpu/br23/audio_enc\audio_recorder_mix.h include_lib\system/includes.h \
+  include_lib/system/generic/rect.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h include_lib/system\includes.h \
   include_lib/system/init.h include_lib/system/spinlock.h \
   include_lib/system/generic\cpu.h include_lib/system/generic\irq.h \
   include_lib/system/timer.h include_lib/system/wait.h \
@@ -90,6 +88,7 @@ objs/apps/soundbox/task_manager/app_task_switch.c.o: \
   include_lib/system/device/includes.h \
   include_lib/system/device/device.h \
   include_lib/system\device/ioctl_cmds.h \
+  include_lib/system/device/key_driver.h \
   include_lib/system/device/iokey.h include_lib/system/device/irkey.h \
   include_lib/system/device/adkey.h \
   include_lib/driver/cpu/br23\asm/adc_api.h \
@@ -122,7 +121,11 @@ objs/apps/soundbox/task_manager/app_task_switch.c.o: \
   include_lib/system/crypto_toolbox/ecdh.h \
   include_lib/system/crypto_toolbox/micro-ecc/uECC_new.h \
   include_lib/system/crypto_toolbox/aes_cmac.h \
-  include_lib/system/crypto_toolbox/rijndael.h \
+  include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\key_event_deal.h \
+  cpu/br23/audio_enc\audio_recorder_mix.h \
   include_lib/media/media_develop\media/includes.h \
   include_lib/media/media_develop\media/audio_decoder.h \
   include_lib/media/media_develop\media/audio_base.h \

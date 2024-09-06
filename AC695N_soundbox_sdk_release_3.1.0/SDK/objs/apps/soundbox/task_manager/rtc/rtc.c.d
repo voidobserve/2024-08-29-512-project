@@ -124,6 +124,10 @@ objs/apps/soundbox/task_manager/rtc/rtc.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h \
   apps/soundbox/include\tone_player.h cpu/br23\audio_config.h \
   apps/common/audio\sine_make.h apps/soundbox/include\app_task.h \
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
+  apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
+  apps/user_apps/rf_keyhandle.h \
   include_lib/media/media_develop\media/includes.h \
   include_lib/media/media_develop\media/audio_decoder.h \
   include_lib/media/media_develop\media/audio_base.h \

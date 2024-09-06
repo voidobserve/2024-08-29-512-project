@@ -208,5 +208,8 @@ objs/cpu/br23/audio_mic/mic_effect.c.o: cpu/br23/audio_mic/mic_effect.c \
   include_lib/media/media_develop/media\application/audio_localtws.h \
   include_lib\media/localtws_decoder.h \
   cpu/br23/audio_mic/effect_linein.h apps/soundbox/include\app_task.h \
-  cpu/br23/audio_mic/vollevel_detect.h cpu/br23/audio_mic/simpleAGC.h \
-  include_lib/system\debug.h
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
+  apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
+  apps/user_apps/rf_keyhandle.h cpu/br23/audio_mic/vollevel_detect.h \
+  cpu/br23/audio_mic/simpleAGC.h include_lib/system\debug.h

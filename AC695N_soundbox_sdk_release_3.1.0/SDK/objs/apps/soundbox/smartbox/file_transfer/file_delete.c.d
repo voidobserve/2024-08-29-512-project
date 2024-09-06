@@ -146,7 +146,10 @@ objs/apps/soundbox/smartbox/file_transfer/file_delete.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h \
   apps/common/dev_manager\dev_manager.h \
   apps/soundbox/include\key_event_deal.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   apps/soundbox/include\common/dev_status.h \
   apps/soundbox/include/task_manager\bt/bt.h cpu/br23\clock_cfg.h \
   apps/common\file_operate/file_manager.h

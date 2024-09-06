@@ -122,7 +122,10 @@ objs/apps/common/charge_box/chgbox_box.c.o: \
   apps/common/charge_box/chgbox_box.h \
   include_lib/driver\device/chargebox.h include_lib/system\user_cfg.h \
   include_lib/system\device/vm.h apps/soundbox/include\app_task.h \
-  apps/soundbox/include\app_main.h \
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
+  apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
+  apps/user_apps/rf_keyhandle.h apps/soundbox/include\app_main.h \
   apps/common/charge_box/chargeIc_manage.h \
   apps/common/charge_box/chgbox_ctrl.h \
   include_lib/driver/cpu/br23\asm/power/p33.h \

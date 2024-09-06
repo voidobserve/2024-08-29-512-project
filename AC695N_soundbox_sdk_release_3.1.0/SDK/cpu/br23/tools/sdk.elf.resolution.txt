@@ -485,10 +485,12 @@ objs/apps/common/key/key_driver.c.o
 -r=objs/apps/common/key/key_driver.c.o,key_driver_init,pl
 -r=objs/apps/common/key/key_driver.c.o,adkey_init,l
 -r=objs/apps/common/key/key_driver.c.o,usr_timer_add,l
+-r=objs/apps/common/key/key_driver.c.o,printf,l
 -r=objs/apps/common/key/key_driver.c.o,timer_get_ms,l
 -r=objs/apps/common/key/key_driver.c.o,sys_event_notify,l
 -r=objs/apps/common/key/key_driver.c.o,adkey_data,l
 -r=objs/apps/common/key/key_driver.c.o,adkey_scan_para,l
+-r=objs/apps/common/key/key_driver.c.o,rfkey_scan_para,l
 -r=objs/apps/common/key/key_driver.c.o,key_lp_target,pl
 objs/apps/common/key/rdec_key.c.o
 objs/apps/common/key/slidekey.c.o
@@ -2869,6 +2871,7 @@ objs/apps/soundbox/task_manager/app_common.c.o
 objs/apps/soundbox/task_manager/app_task_switch.c.o
 -r=objs/apps/soundbox/task_manager/app_task_switch.c.o,app_key_event_remap,pl
 -r=objs/apps/soundbox/task_manager/app_task_switch.c.o,adkey_event_to_msg,l
+-r=objs/apps/soundbox/task_manager/app_task_switch.c.o,rfkey_event_to_msg,l
 -r=objs/apps/soundbox/task_manager/app_task_switch.c.o,app_task_switch_prev,pl
 -r=objs/apps/soundbox/task_manager/app_task_switch.c.o,printf,l
 -r=objs/apps/soundbox/task_manager/app_task_switch.c.o,app_task_switch_to,pl
@@ -4989,7 +4992,6 @@ objs/apps/user_apps/rf_decode.c.o
 -r=objs/apps/user_apps/rf_decode.c.o,timer_rf_isr,pl
 -r=objs/apps/user_apps/rf_decode.c.o,local_irq_disable,l
 -r=objs/apps/user_apps/rf_decode.c.o,gpio_read,l
--r=objs/apps/user_apps/rf_decode.c.o,printf,l
 -r=objs/apps/user_apps/rf_decode.c.o,os_taskq_post_msg,l
 -r=objs/apps/user_apps/rf_decode.c.o,local_irq_enable,l
 -r=objs/apps/user_apps/rf_decode.c.o,set_rf_clk,pl
@@ -5003,6 +5005,15 @@ objs/apps/user_apps/rf_decode.c.o
 -r=objs/apps/user_apps/rf_decode.c.o,rf_decode_task_handler,pl
 -r=objs/apps/user_apps/rf_decode.c.o,os_taskq_pend,l
 -r=objs/apps/user_apps/rf_decode.c.o,rf_data,pl
+-r=objs/apps/user_apps/rf_decode.c.o,rf_addr,pl
+-r=objs/apps/user_apps/rf_decode.c.o,rf_key,pl
+objs/apps/user_apps/rf_keyhandle.c.o
+-r=objs/apps/user_apps/rf_keyhandle.c.o,rf_get_key_value,pl
+-r=objs/apps/user_apps/rf_keyhandle.c.o,rfkey_event_to_msg,pl
+-r=objs/apps/user_apps/rf_keyhandle.c.o,printf,l
+-r=objs/apps/user_apps/rf_keyhandle.c.o,rf_key_table,pl
+-r=objs/apps/user_apps/rf_keyhandle.c.o,rfkey_scan_para,pl
+-r=objs/apps/user_apps/rf_keyhandle.c.o,rf_data,l
 include_lib/liba/br23/cpu.a.llvm.18034.crc16.c
 -r=include_lib/liba/br23/cpu.a.llvm.18034.crc16.c,__crc16_mutex_init,pl
 -r=include_lib/liba/br23/cpu.a.llvm.18034.crc16.c,os_mutex_create,l

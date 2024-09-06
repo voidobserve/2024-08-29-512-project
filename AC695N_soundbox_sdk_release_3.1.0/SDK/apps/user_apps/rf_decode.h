@@ -9,6 +9,8 @@
 extern volatile u32 rf_data; // 倒序存放接收到的rf数据
 // extern volatile u8 rf_recv_flag; // 标志位，表示是否完成一次rf数据的接收，0--未接收，1--接收
 
+// extern struct key_driver_para rfkey_scan_para; // 按键驱动扫描参数列表
+
 void rf_config(void);
 
 void rf_decode_task_handler(void *p);

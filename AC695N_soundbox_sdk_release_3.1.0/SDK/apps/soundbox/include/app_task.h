@@ -5,6 +5,7 @@
 #include "app_msg.h"
 #include "system/event.h"
 
+#include "user_config.h"
 
 enum {
     APP_POWERON_TASK  = 1,

@@ -16,7 +16,7 @@ typedef enum __KEY_DRIVER_TYPE {
     KEY_DRIVER_TYPE_SLIDEKEY,
     KEY_DRIVER_TYPE_SOFTKEY,
 
-    // 注册RF遥控器按键类型
+    // 注册RF遥控器按键类型：
     KEY_DRIVER_TYPE_RF, // rf遥控器按键
 
     KEY_DRIVER_TYPE_MAX,

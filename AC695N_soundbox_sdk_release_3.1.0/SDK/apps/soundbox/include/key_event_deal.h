@@ -180,6 +180,19 @@ enum {
     //不会出现在按键主流程，用于不重要得其他操作
     KEY_MINOR_OPT,
 
+    // 注册rf遥控器按键的事件：（每个按键都包括单击、双击、长按等）
+    KEY_RF_NUM_1,
+    KEY_RF_NUM_2,
+    KEY_RF_NUM_3,
+    KEY_RF_NUM_4,
+    KEY_RF_NUM_5,
+    KEY_RF_NUM_6,
+
+    KEY_RF_LONG_PRESS, // rf遥控器按键长按
+    KEY_RF_HOLD, // rf遥控器按键持续按住
+    KEY_RF_LOOSE, // rf遥控器按键松开
+    KEY_RF_DOUBLE_CLICK, // rf遥控器按键双击
+
     KEY_NULL = 0xFFFF,
 
     KEY_MSG_MAX = 0xFFFF,

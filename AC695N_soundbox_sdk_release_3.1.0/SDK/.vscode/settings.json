@@ -21,6 +21,9 @@
         "mcpwm.h": "c",
         "timer.h": "c",
         "irflt.h": "c",
-        "rf_433decode.h": "c"
+        "rf_433decode.h": "c",
+        "rf_decode.h": "c",
+        "app_task.h": "c",
+        "key_event_deal.h": "c"
     }
 }

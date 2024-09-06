@@ -99,13 +99,9 @@ objs/apps/soundbox/ui/lcd/STYLE_02/bt_action.c.o: \
   apps/soundbox/include\ui/led7/led7_driver.h \
   apps/soundbox/include\ui/lcd_seg/lcd_seg3x9_driver.h \
   apps/soundbox/include\app_task.h include_lib/system\app_msg.h \
-  include_lib\system/timer.h apps/soundbox/include\key_event_deal.h \
-  cpu/br23\audio_config.h include_lib\btstack/avctp_user.h \
-  include_lib/btstack/btstack_typedef.h \
-  apps/soundbox/include\app_power_manage.h \
-  include_lib/driver/cpu/br23\asm/charge.h \
-  include_lib\media/audio_eq_drc_apply.h include_lib\system/includes.h \
-  include_lib/system/init.h include_lib/system/spinlock.h \
+  apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
+  include_lib/system\includes.h include_lib/system/init.h \
+  include_lib/system/spinlock.h include_lib/system/timer.h \
   include_lib/system/wait.h include_lib/system/app_core.h \
   include_lib/system/database.h include_lib/system/power_manage.h \
   include_lib/system/syscfg_id.h include_lib/system/bank_switch.h \
@@ -153,7 +149,14 @@ objs/apps/soundbox/ui/lcd/STYLE_02/bt_action.c.o: \
   include_lib/system/crypto_toolbox/ecdh.h \
   include_lib/system/crypto_toolbox/micro-ecc/uECC_new.h \
   include_lib/system/crypto_toolbox/aes_cmac.h \
-  include_lib/system/crypto_toolbox/rijndael.h \
+  include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/soundbox/include\key_event_deal.h cpu/br23\audio_config.h \
+  include_lib\btstack/avctp_user.h include_lib/btstack/btstack_typedef.h \
+  apps/soundbox/include\app_power_manage.h \
+  include_lib/driver/cpu/br23\asm/charge.h \
+  include_lib\media/audio_eq_drc_apply.h \
   include_lib\media/audio_stream.h \
   include_lib/media/media_develop\media/audio_base.h \
   include_lib\media/audio_eq.h \

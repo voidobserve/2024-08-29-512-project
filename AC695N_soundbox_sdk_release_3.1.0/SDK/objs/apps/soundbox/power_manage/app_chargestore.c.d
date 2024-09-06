@@ -145,5 +145,8 @@ objs/apps/soundbox/power_manage/app_chargestore.c.o: \
   C:/JL/pi32/pi32v2-include\alloca.h \
   include_lib/btctrler/classic/hci_lmp.h \
   apps/common/third_party_profile/jieli/JL_rcsp/bt_trans_data\le_rcsp_adv_module.h \
-  apps/soundbox/include\app_task.h \
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
   include_lib/update\update_loader_download.h include_lib/system\debug.h

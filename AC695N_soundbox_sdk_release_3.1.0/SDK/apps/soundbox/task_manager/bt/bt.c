@@ -1061,6 +1061,11 @@ int bt_key_event_handler(struct sys_event *event)
         break;
 #endif
 
+    case KEY_RF_NUM_1:
+        printf("%s %d\n", __FUNCTION__, __LINE__);
+
+        break;
+
     default:
         ret = false;
         break;
@@ -1246,11 +1251,14 @@ void app_bt_task()
 
     while (1)
     {
+        /*
+            app获取消息的接口，包括获取系统的消息，非阻塞
+        */
         app_task_get_msg(msg, ARRAY_SIZE(msg), 1);
 
         switch (msg[0])
         {
-        case APP_MSG_SYS_EVENT:
+        case APP_MSG_SYS_EVENT: // 如果获取到了系统消息
             if (bt_sys_event_handler((struct sys_event *)(msg + 1)) == false)
             {
                 app_default_event_deal((struct sys_event *)(&msg[1]));

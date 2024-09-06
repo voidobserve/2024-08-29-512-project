@@ -4,6 +4,8 @@
 #include "board_config.h"
 #include "app_task.h"
 
+// #include "user_config.h"
+
 //ad key
 extern const u16 bt_key_ad_table[KEY_AD_NUM_MAX][KEY_EVENT_MAX];
 extern const u16 music_key_ad_table[KEY_AD_NUM_MAX][KEY_EVENT_MAX];
@@ -17,7 +19,8 @@ extern const u16 idle_key_ad_table[KEY_AD_NUM_MAX][KEY_EVENT_MAX];
 /***********************************************************
  *				adkey table 映射管理
  ***********************************************************/
-typedef const u16(*type_key_ad_table)[KEY_EVENT_MAX];
+typedef const u16(*type_key_ad_table)[KEY_EVENT_MAX]; // 给类型起别名，类型为指向结构体的指针
+// 定义指针数组：
 static const type_key_ad_table ad_table[APP_TASK_MAX_INDEX] = {
 #if TCFG_APP_BT_EN
     [APP_BT_TASK] 		= bt_key_ad_table,
@@ -53,6 +56,8 @@ u16 adkey_event_to_msg(u8 cur_task, struct key_event *key)
     }
 
     type_key_ad_table cur_task_ad_table = ad_table[cur_task];
+
+    // printf("%s %d\n", __FUNCTION__, __LINE__);
     return	cur_task_ad_table[key->value][key->event];
 }
 

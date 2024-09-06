@@ -144,4 +144,8 @@ objs/apps/soundbox/power_manage/app_charge.c.o: \
   C:/JL/pi32/pi32v2-include\machine/stdlib.h \
   C:/JL/pi32/pi32v2-include\alloca.h \
   include_lib/btctrler/classic/hci_lmp.h \
-  apps/soundbox/include\app_task.h include_lib/system\debug.h
+  apps/soundbox/include\app_task.h apps/user_apps\user_config.h \
+  apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
+  apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  include_lib/system\debug.h
