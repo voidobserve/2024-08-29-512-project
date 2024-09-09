@@ -4,16 +4,13 @@
 #include "includes.h"
 #include "user_config.h"
 
-#define MSG_RF_RECV_FLAG 0xA5 // 消息，表示完成了一次接收
+#define MSG_RF_RECV_FLAG 0xA5 // 消息，表示完成了一次接收（需要注意不能与 "key_event_deal.h"文件中的rf按键事件的相关定义冲突）
 
-extern volatile u32 rf_data; // 倒序存放接收到的rf数据
-// extern volatile u8 rf_recv_flag; // 标志位，表示是否完成一次rf数据的接收，0--未接收，1--接收
-
-// extern struct key_driver_para rfkey_scan_para; // 按键驱动扫描参数列表
+extern volatile u32 rf_data; // 存放接收到的rf数据
+extern volatile u32 rf_addr; // 存放rf遥控器的器件地址
 
 void rf_config(void);
-
 void rf_decode_task_handler(void *p);
-// void fun(void *p);
+
 
 #endif

@@ -4,8 +4,9 @@
 #include "typedef.h"
 #include "system/event.h"
 
-enum {
-    KEY_POWER_ON = 0x80,//从0x80开始,避免与系统默认事件冲突
+enum
+{
+    KEY_POWER_ON = 0x80, // 从0x80开始,避免与系统默认事件冲突
     KEY_POWER_ON_HOLD,
     KEY_POWEROFF,
     KEY_POWEROFF_HOLD,
@@ -58,9 +59,8 @@ enum {
     KEY_FM_NEXT_STATION,
     KEY_FM_PREV_FREQ,
     KEY_FM_NEXT_FREQ,
-    KEY_FM_SCAN_UP,//半自动搜台
-    KEY_FM_SCAN_DOWN,//半自动搜台
-
+    KEY_FM_SCAN_UP,   // 半自动搜台
+    KEY_FM_SCAN_DOWN, // 半自动搜台
 
     KEY_FM_EMITTER_MENU,
     KEY_FM_EMITTER_NEXT_FREQ,
@@ -121,7 +121,7 @@ enum {
     KEY_BOX_POWER_FOUR,
     KEY_BOX_POWER_FIVE,
 
-    ///soundcard相关按键消息
+    /// soundcard相关按键消息
     KEY_SOUNDCARD_MODE_ELECTRIC,
     KEY_SOUNDCARD_MODE_PITCH,
     KEY_SOUNDCARD_MODE_PITCH_BY_VALUE,
@@ -143,7 +143,7 @@ enum {
     KEY_SOUNDCARD_MAKE_NOISE9,
     KEY_SOUNDCARD_MAKE_NOISE10,
     KEY_SOUNDCARD_MAKE_NOISE11,
-///旋钮按键
+    /// 旋钮按键
     KEY_SOUNDCARD_SLIDE_MIC,
     KEY_SOUNDCARD_SLIDE_WET_GAIN,
     KEY_SOUNDCARD_SLIDE_HIGH_SOUND,
@@ -157,11 +157,10 @@ enum {
     KEY_SOUNDCARD_EAR_MIC_STATUS_UPDATE,
     KEY_SOUNDCARD_AUX_STATUS_UPDATE,
 
-
     KEY_TEST_DEMO_0,
     KEY_TEST_DEMO_1,
 
-    KEY_IR_NUM_0,  //中间不允许插入
+    KEY_IR_NUM_0, // 中间不允许插入
     KEY_IR_NUM_1,
     KEY_IR_NUM_2,
     KEY_IR_NUM_3,
@@ -170,40 +169,71 @@ enum {
     KEY_IR_NUM_6,
     KEY_IR_NUM_7,
     KEY_IR_NUM_8,
-    KEY_IR_NUM_9,//中间不允许插入
-    //在这里增加元素
+    KEY_IR_NUM_9, // 中间不允许插入
+    // 在这里增加元素
     //
     KEY_HID_MODE_SWITCH,
     KEY_HID_TAKE_PICTURE,
     KEY_LINEIN_START,
-    MSG_HALF_SECOND,//半秒的事件
-    //不会出现在按键主流程，用于不重要得其他操作
+    MSG_HALF_SECOND, // 半秒的事件
+    // 不会出现在按键主流程，用于不重要得其他操作
     KEY_MINOR_OPT,
 
+    // 注册rf遥控器学习的事件：
+    KEY_RF_LEARN, 
     // 注册rf遥控器按键的事件：（每个按键都包括单击、双击、长按等）
-    KEY_RF_NUM_1,
-    KEY_RF_NUM_2,
-    KEY_RF_NUM_3,
-    KEY_RF_NUM_4,
-    KEY_RF_NUM_5,
-    KEY_RF_NUM_6,
-
-    KEY_RF_LONG_PRESS, // rf遥控器按键长按
-    KEY_RF_HOLD, // rf遥控器按键持续按住
-    KEY_RF_LOOSE, // rf遥控器按键松开
-    KEY_RF_DOUBLE_CLICK, // rf遥控器按键双击
+    KEY_RF_NUM_1_CLICK,
+    KEY_RF_NUM_2_CLICK,
+    KEY_RF_NUM_3_CLICK,
+    KEY_RF_NUM_4_CLICK,
+    KEY_RF_NUM_5_CLICK,
+    KEY_RF_NUM_6_CLICK,
+    // rf遥控器长按事件
+    KEY_RF_NUM_1_LONG,
+    KEY_RF_NUM_2_LONG,
+    KEY_RF_NUM_3_LONG,
+    KEY_RF_NUM_4_LONG,
+    KEY_RF_NUM_5_LONG,
+    KEY_RF_NUM_6_LONG,
+    // rf遥控器保持事件--hold
+    KEY_RF_NUM_1_HOLD,
+    KEY_RF_NUM_2_HOLD,
+    KEY_RF_NUM_3_HOLD,
+    KEY_RF_NUM_4_HOLD,
+    KEY_RF_NUM_5_HOLD,
+    KEY_RF_NUM_6_HOLD,
+    // rf遥控器松开、拾起事件
+    KEY_RF_NUM_1_LOOSE,
+    KEY_RF_NUM_2_LOOSE,
+    KEY_RF_NUM_3_LOOSE,
+    KEY_RF_NUM_4_LOOSE,
+    KEY_RF_NUM_5_LOOSE,
+    KEY_RF_NUM_6_LOOSE,
+    // rf遥控器双击事件
+    KEY_RF_NUM_1_DOUBLE_CLICK,
+    KEY_RF_NUM_2_DOUBLE_CLICK,
+    KEY_RF_NUM_3_DOUBLE_CLICK,
+    KEY_RF_NUM_4_DOUBLE_CLICK,
+    KEY_RF_NUM_5_DOUBLE_CLICK,
+    KEY_RF_NUM_6_DOUBLE_CLICK,
+    // rf遥控器三击事件
+    KEY_RF_NUM_1_TRIPLE_CLICK,
+    KEY_RF_NUM_2_TRIPLE_CLICK,
+    KEY_RF_NUM_3_TRIPLE_CLICK,
+    KEY_RF_NUM_4_TRIPLE_CLICK,
+    KEY_RF_NUM_5_TRIPLE_CLICK,
+    KEY_RF_NUM_6_TRIPLE_CLICK,
 
     KEY_NULL = 0xFFFF,
 
     KEY_MSG_MAX = 0xFFFF,
-    //音箱sdk 按键消息已经加大为0xffff
+    // 音箱sdk 按键消息已经加大为0xffff
 };
 
-
-enum {
+enum
+{
     ONE_KEY_CTL_NEXT_PREV = 1,
     ONE_KEY_CTL_VOL_UP_DOWN,
 };
-
 
 #endif

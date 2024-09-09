@@ -19,6 +19,7 @@
 #endif
 
 #include "user_config.h" // 自定义的配置头文件
+#include "key_event_deal.h" 
 
 #define LOG_TAG_CONST KEY
 #define LOG_TAG "[KEY]"
@@ -229,28 +230,30 @@ _notify:
     }
 #endif
 
+    //  如果是是rf遥控器按键对应的事件
     if (KEY_DRIVER_TYPE_RF == scan_para->key_type)
     {
-        // 如果是rf遥控器的按键，向检测rf遥控器按键的线程发送消息，而不是发送系统事件
-        // printf("\n KEY_DRIVER_TYPE_RF \n");
-        // e.u.key.event = key_event;
-        // scan_para->click_cnt = 0; // 单击次数清0
-        // scan_para->notify_value = NO_KEY;
+        int msg = KEY_NULL; // 存放待发送的事件（事件消息）
 
-        // printf("key_event %d\n", key_event); // key_event == 2,一直没变
-        // printf("-----------------function : %s %d\n", __FUNCTION__, __LINE__);
+        // 如果是rf遥控器的按键，向检测rf遥控器按键的线程发送消息，而不是发送系统事件
+        // key_value &= ~BIT(7);   // BIT(7) 用作按键特殊处理的标志
+        // e.type = SYS_KEY_EVENT; // 系统按键事件
+        // e.u.key.init = 1;
+        // e.u.key.type = scan_para->key_type; // 区分按键类型
+        e.u.key.event = key_event; // 存放按键事件（由系统的按键事件提供）
+        e.u.key.value = key_value; // 存放实际的键值
+        // e.u.key.tmr = timer_get_ms();
         scan_para->click_cnt = 0; // 单击次数清0
         scan_para->notify_value = NO_KEY;
-        printf("key_value %u \nkey_event %d \n", key_value, key_event);
-        // if (key_event == KEY_EVENT_CLICK)
-        // {
-        //     printf("\n KEY_EVENT_CLICK \n");
-        // }
-
+        // printf("key_value %u \nkey_event %d \n", key_value, key_event);
 
         // 发送消息给到自己的线程来处理，而不是发送到系统消息
+        msg = rfkey_event_to_msg(0, &e.u.key); // 将系统的按键事件转换为自定义的按键事件
+        // printf("msg : %d\n", msg);
+        os_taskq_post_msg("rf_decode", 1, msg);
     }
-    else if (1)
+    // else if (1)
+    else // 如果不是rf遥控器按键对应的事件
     {
         key_value &= ~BIT(7);   // BIT(7) 用作按键特殊处理的标志
         e.type = SYS_KEY_EVENT; // 系统按键事件
@@ -267,8 +270,8 @@ _notify:
         /* printf("key_value: 0x%x, event: %d\n", key_value, key_event); */
         if (key_event_remap(&e))
         {
-            printf("-----------------function : %s %d\n", __FUNCTION__, __LINE__);
-            printf("key_value %u \nkey_event %d \n", key_value, key_event);
+            // printf("-----------------function : %s %d\n", __FUNCTION__, __LINE__);
+            // printf("key_value %u \nkey_event %d \n", key_value, key_event);
             sys_event_notify(&e);
 #if TCFG_KEY_TONE_EN
             audio_key_tone_play();

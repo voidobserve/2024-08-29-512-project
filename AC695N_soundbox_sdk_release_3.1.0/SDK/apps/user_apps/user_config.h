@@ -17,6 +17,7 @@
 #define RF_DECODE_PIN IO_PORTB_05 // rf信号接收引脚
 
 #define RFKEY_ENABLE 1 // 使能rf按键扫描功能
+#define RF_LEARN_KEY 0x02 // 学习按键的键值(4位，如果是8位的键值，要修改相应的驱动)
 
 // #include "uart.h" // 接收dmx512数据使用到的串口
 

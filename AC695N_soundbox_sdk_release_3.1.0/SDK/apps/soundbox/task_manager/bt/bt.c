@@ -1061,11 +1061,6 @@ int bt_key_event_handler(struct sys_event *event)
         break;
 #endif
 
-    case KEY_RF_NUM_1:
-        printf("%s %d\n", __FUNCTION__, __LINE__);
-
-        break;
-
     default:
         ret = false;
         break;

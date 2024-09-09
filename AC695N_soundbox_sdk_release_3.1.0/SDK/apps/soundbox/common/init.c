@@ -187,6 +187,7 @@ static void app_init()
     /* clock_add_set(CHARGE_BOX_CLK); */
     chgbox_init_app();
 #endif
+    // task_create(rf_decode_task_handler, NULL, "rf_decode");
 }
 
 static void app_task_handler(void *p)
@@ -241,7 +242,7 @@ int main()
     board_early_init();
 
     task_create(app_task_handler, NULL, "app_core");
-    task_create(rf_decode_task_handler, NULL, "rf_decode");
+    // task_create(rf_decode_task_handler, NULL, "rf_decode");
     // task_create(fun, NULL, "test_fun");
 
     os_start();

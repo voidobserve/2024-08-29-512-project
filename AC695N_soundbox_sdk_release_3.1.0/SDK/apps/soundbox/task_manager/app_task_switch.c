@@ -68,13 +68,13 @@ int app_key_event_remap(struct sys_event *e)
 #endif
         break;
 
-// 注册rf按键类型的事件转换为消息的函数:
-#if RFKEY_ENABLE
-    case KEY_DRIVER_TYPE_RF: // 如果是rf遥控器按键事件
-        // printf("%s %d\n", __FUNCTION__, __LINE__);
-        msg = rfkey_event_to_msg(app_curr_task, key);
-    break;
-#endif
+// 注册rf按键类型的事件转换为消息的函数（后续不在这里注册，而是检测到rf按键按下后，发送消息给到对应的线程）:
+// #if RFKEY_ENABLE
+//     case KEY_DRIVER_TYPE_RF: // 如果是rf遥控器按键事件
+//         // printf("%s %d\n", __FUNCTION__, __LINE__);
+//         msg = rfkey_event_to_msg(app_curr_task, key);
+//     break;
+// #endif
 
     case KEY_DRIVER_TYPE_IR:
 #if TCFG_IRKEY_ENABLE

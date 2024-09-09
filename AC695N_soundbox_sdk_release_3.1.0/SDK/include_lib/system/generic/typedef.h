@@ -35,6 +35,7 @@ Date：
 
 #define SEC_USED(x)
 #define SEC(x)
+#define sec(x)
 #define AT(x)
 #define SET(x)
 #define ALIGNED(x)

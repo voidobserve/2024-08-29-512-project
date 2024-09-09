@@ -1,9 +1,9 @@
 #include "rf_decode.h"
+#include "key_event_deal.h" // 包含系统的按键事件的相关定义
 
 #define RF_TIME_REG JL_TIMER3         // 使用到的定时器
 #define RF_IRQ_TIME_IDX IRQ_TIME3_IDX // 使用到的定时器对应的中断号
 #define RF_RECV_PIN RF_DECODE_PIN     // 接收RF信号的引脚
-// #define RF_FINISH_WAIT 1
 
 static const u16 timer_div[] = {
     /*0000*/ 1,
@@ -25,12 +25,10 @@ static const u16 timer_div[] = {
 };
 
 static u32 __rf_data = 0; // 存放接收到的rf数据（在定时器中断中使用）
-volatile u32 rf_data = 0; // 存放接收到的rf数据
+volatile u32 rf_data = 0; // 存放接收到的rf数据（在线程中会读取__rf_data的值来更新）
 
-volatile u32 rf_addr = 0; // 存放遥控器的地址 (后续可能要改成支持多个遥控器，可能要换成数组来存放)
-volatile u8 rf_key = 0;   //
-
-// volatile u8 rf_recv_flag = 0; // 标志位，表示是否完成一次rf数据的接收，0--未接收，1--接收
+volatile u32 rf_addr = 0xFFFFFFFF; // 存放遥控器的地址 (后续可能要改成支持多个遥控器，可能要换成数组来存放)
+volatile u8 rf_key = 0;            // 存放遥控器按键的键值
 
 ___interrupt
     AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率
@@ -117,7 +115,7 @@ ___interrupt
             if (rf_bit_cnt != 25)
             {
                 flagerror = 1;
-                // __rf_data = 0xFFFFFFFF; 
+                __rf_data = 0xFFFFFFFF;
                 // printf("rf decode err \n");
             }
             else // 解码成功
@@ -127,7 +125,9 @@ ___interrupt
                 // printf("%s , %d\n", __FUNCTION__, __LINE__);
                 os_taskq_post_msg("rf_decode", 1, MSG_RF_RECV_FLAG);
 
-                // 存放地址和键值
+                // 存放地址和键值（不能在这里保存地址和键值，会影响学习的操作）
+                // rf_addr = __rf_data >> 4;
+                // rf_key = __rf_data & 0x0F;
 
                 // printf("%s , %d\n", __FUNCTION__, __LINE__);
                 // rf_recv_flag = 1;
@@ -218,10 +218,20 @@ void rf_config(void)
     set_rf_clk(); // 配置扫描rf信号的定时器
 }
 
+// 处理rf信号的线程/任务
 void rf_decode_task_handler(void *p)
 {
     u8 ret = 0;
     int msg[16] = {0};
+
+    // syscfg_read() 和 syscfg_write() 不能早于这些模块的初始化前 就调用
+    if (syscfg_read(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr)) != sizeof(rf_addr))
+    {
+        // 如果是第一次上电或是读取到空的数据，给一初始值并写回
+        rf_addr = 0xFFFFFFFF;
+        syscfg_write(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr));
+    }
+    printf("=================addr : %x\n", rf_addr);
 
     rf_config();
 
@@ -229,7 +239,6 @@ void rf_decode_task_handler(void *p)
     {
         // printf("%s , %d\n", __FUNCTION__, __LINE__);
         ret = os_taskq_pend("rf_decode", msg, ARRAY_SIZE(msg));
-        rf_data = __rf_data; // 收到消息后，更新一次收到的数据
         // printf("%s , %d\n", __FUNCTION__, __LINE__);
         // printf("ret:  %d\n", (int)ret);
         if (ret != OS_TASKQ)
@@ -241,10 +250,137 @@ void rf_decode_task_handler(void *p)
             continue;
         }
 
-        switch (ret)
+        switch (msg[1])
         {
         case MSG_RF_RECV_FLAG:
-            printf("get msg rf_recv\n");
+            // printf("get msg rf_recv\n");
+            rf_data = __rf_data; // 收到消息后，更新一次收到的数据
+            break;
+
+        case KEY_RF_LEARN:    // 如果rf学习事件触发
+            rf_addr = msg[2]; // 存放学习到的遥控器的地址
+            // for (u16 i = 0 ; i < ARRAY_SIZE(msg); i++)
+            // {
+            //     printf("msg[%d]: 0x-%x \n", (int)i, msg[i]);
+            // }
+            syscfg_write(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr));
+            printf("=================addr : %x\n", rf_addr);
+            syscfg_read(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr));
+            printf("=================addr : %x\n", rf_addr);
+            break;
+
+        case KEY_RF_NUM_1_CLICK:
+            printf("KEY_RF_NUM_1_CLICK\n");
+            break;
+        case KEY_RF_NUM_1_LONG:
+            printf("KEY_RF_NUM_1_LONG\n");
+            break;
+        case KEY_RF_NUM_1_HOLD:
+            printf("KEY_RF_NUM_1_HOLD\n");
+            break;
+        case KEY_RF_NUM_1_LOOSE:
+            printf("KEY_RF_NUM_1_LOOSE\n");
+            break;
+        case KEY_RF_NUM_1_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_1_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_1_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_1_TRIPLE_CLICK\n");
+            break;
+
+        case KEY_RF_NUM_2_CLICK:
+            printf("KEY_RF_NUM_2_CLICK\n");
+            break;
+        case KEY_RF_NUM_2_LONG:
+            printf("KEY_RF_NUM_2_LONG\n");
+            break;
+        case KEY_RF_NUM_2_HOLD:
+            printf("KEY_RF_NUM_2_HOLD\n");
+            break;
+        case KEY_RF_NUM_2_LOOSE:
+            printf("KEY_RF_NUM_2_LOOSE\n");
+            break;
+        case KEY_RF_NUM_2_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_2_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_2_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_2_TRIPLE_CLICK\n");
+            break;
+
+        case KEY_RF_NUM_3_CLICK:
+            printf("KEY_RF_NUM_3_CLICK\n");
+            break;
+        case KEY_RF_NUM_3_LONG:
+            printf("KEY_RF_NUM_3_LONG\n");
+            break;
+        case KEY_RF_NUM_3_HOLD:
+            printf("KEY_RF_NUM_3_HOLD\n");
+            break;
+        case KEY_RF_NUM_3_LOOSE:
+            printf("KEY_RF_NUM_3_LOOSE\n");
+            break;
+        case KEY_RF_NUM_3_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_3_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_3_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_3_TRIPLE_CLICK\n");
+            break;
+
+        case KEY_RF_NUM_4_CLICK:
+            printf("KEY_RF_NUM_4_CLICK\n");
+            break;
+        case KEY_RF_NUM_4_LONG:
+            printf("KEY_RF_NUM_4_LONG\n");
+            break;
+        case KEY_RF_NUM_4_HOLD:
+            printf("KEY_RF_NUM_4_HOLD\n");
+            break;
+        case KEY_RF_NUM_4_LOOSE:
+            printf("KEY_RF_NUM_4_LOOSE\n");
+            break;
+        case KEY_RF_NUM_4_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_4_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_4_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_4_TRIPLE_CLICK\n");
+            break;
+
+        case KEY_RF_NUM_5_CLICK:
+            printf("KEY_RF_NUM_5_CLICK\n");
+            break;
+        case KEY_RF_NUM_5_LONG:
+            printf("KEY_RF_NUM_5_LONG\n");
+            break;
+        case KEY_RF_NUM_5_HOLD:
+            printf("KEY_RF_NUM_5_HOLD\n");
+            break;
+        case KEY_RF_NUM_5_LOOSE:
+            printf("KEY_RF_NUM_5_LOOSE\n");
+            break;
+        case KEY_RF_NUM_5_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_5_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_5_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_5_TRIPLE_CLICK\n");
+            break;
+
+        case KEY_RF_NUM_6_CLICK:
+            printf("KEY_RF_NUM_6_CLICK\n");
+            break;
+        case KEY_RF_NUM_6_LONG:
+            printf("KEY_RF_NUM_6_LONG\n");
+            break;
+        case KEY_RF_NUM_6_HOLD:
+            printf("KEY_RF_NUM_6_HOLD\n");
+            break;
+        case KEY_RF_NUM_6_LOOSE:
+            printf("KEY_RF_NUM_6_LOOSE\n");
+            break;
+        case KEY_RF_NUM_6_DOUBLE_CLICK:
+            printf("KEY_RF_NUM_6_DOUBLE_CLICK\n");
+            break;
+        case KEY_RF_NUM_6_TRIPLE_CLICK:
+            printf("KEY_RF_NUM_6_TRIPLE_CLICK\n");
             break;
 
         default:
@@ -254,3 +390,9 @@ void rf_decode_task_handler(void *p)
         // os_time_dly(10);
     }
 }
+
+void rf_decode_task_init()
+{
+    task_create(rf_decode_task_handler, NULL, "rf_decode");
+}
+module_initcall(rf_decode_task_init); // 将函数注册到初始化后，自动调用
