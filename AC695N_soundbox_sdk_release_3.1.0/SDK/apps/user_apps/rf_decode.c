@@ -24,11 +24,11 @@ static const u16 timer_div[] = {
     /*1111*/ 128 * 256,
 };
 
-static u32 __rf_data = 0; // 存放接收到的rf数据（在定时器中断中使用）
-volatile u32 rf_data = 0; // 存放接收到的rf数据（在线程中会读取__rf_data的值来更新）
+static u32 __rf_data = 0xFFFFFFFF; // 存放接收到的rf数据（在定时器中断中使用）
+volatile u32 rf_data = 0xFFFFFFFF; // 存放接收到的rf数据（在线程中会读取__rf_data的值来更新）
 
 volatile u32 rf_addr = 0xFFFFFFFF; // 存放遥控器的地址 (后续可能要改成支持多个遥控器，可能要换成数组来存放)
-volatile u8 rf_key = 0;            // 存放遥控器按键的键值
+// volatile u8 rf_key = 0;            // 存放遥控器按键的键值
 
 ___interrupt
     AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率
@@ -265,8 +265,8 @@ void rf_decode_task_handler(void *p)
             // }
             syscfg_write(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr));
             printf("=================addr : %x\n", rf_addr);
-            syscfg_read(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr));
-            printf("=================addr : %x\n", rf_addr);
+            // syscfg_read(CFG_USER_RF_ADDR, &rf_addr, sizeof(rf_addr)); // 测试读写是否成功
+            // printf("=================addr : %x\n", rf_addr);
             break;
 
         case KEY_RF_NUM_1_CLICK:
@@ -391,7 +391,7 @@ void rf_decode_task_handler(void *p)
     }
 }
 
-void rf_decode_task_init()
+void rf_decode_task_init(void)
 {
     task_create(rf_decode_task_handler, NULL, "rf_decode");
 }

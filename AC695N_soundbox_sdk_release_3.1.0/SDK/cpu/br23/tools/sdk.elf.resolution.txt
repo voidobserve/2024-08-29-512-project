@@ -5011,7 +5011,6 @@ objs/apps/user_apps/rf_decode.c.o
 -r=objs/apps/user_apps/rf_decode.c.o,puts,l
 -r=objs/apps/user_apps/rf_decode.c.o,rf_data,pl
 -r=objs/apps/user_apps/rf_decode.c.o,rf_addr,pl
--r=objs/apps/user_apps/rf_decode.c.o,rf_key,pl
 -r=objs/apps/user_apps/rf_decode.c.o,__initcall_rf_decode_task_init,pl
 objs/apps/user_apps/rf_keyhandle.c.o
 -r=objs/apps/user_apps/rf_keyhandle.c.o,rfkey_event_to_msg,pl
