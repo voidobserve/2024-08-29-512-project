@@ -1,23 +1,23 @@
 
-[14:29:10.580]收←◆?
+[17:01:09.541]收←◆ 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         setup_arch Sep  6 2024 11:06:22 
+         setup_arch Sep 12 2024 10:40:45 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
---P3 Reset Source : 0x1
-VDDIO POR
-[Info]: [SDFILE]VM size: 0x20000 @ 0x5d000
+--P3 Reset Source : 0x8
+VCM
+[Info]: [SDFILE]VM size: 0x20000 @ 0x5e000
 [Info]: [SDFILE]disk capacity 2048 KB
-last file_addr:5bf01 49d
-end_addr:5d000
+last file_addr:5d5c5 49d
+end_addr:5e000
 
-49 53 44 55 04 02 15 FF 1D 22 BB F5 8D B0 FF FF 
+49 53 44 55 04 02 15 FF 3B 95 C5 D6 8C DE FF FF 
 [Debug]: [SDFILE]sdfile mount succ
 
-[14:29:10.649]收←◆[Info]: [BOARD]Power init : apps/soundbox/board/br23/board_ac695x_demo/board_ac695x_demo.c
+[17:01:09.599]收←◆[Info]: [BOARD]Power init : apps/soundbox/board/br23/board_ac695x_demo/board_ac695x_demo.c
 
-[14:29:10.719]收←◆wvdd_lev: 4
-vbat_adc_value = 312
+[17:01:09.664]收←◆wvdd_lev: 4
+vbat_adc_value = 340
 vbg_adc_value = 360
 [Info]: [USER_CFG]read new cfg bt name config:jl_soundbox_lihui
 
@@ -74,24 +74,29 @@ FF FF
 
 [Info]: [USER_CFG]mac:
 
-29 98 B4 9D 94 B7 
+9B E2 A0 32 6F 09 
 [Info]: [USER_CFG]ble mac:
 
-53 C0 B8 99 44 74 
+FA 8E 8C 09 D0 77 
 [Info]: [USER_CFG]lrc cfg:
 
 E0 01 90 01 E0 01 8C 00 01 
 add sample ch 3
-key_driver_init 323
-[Info]: [TEST-UPDATE]testbox msg handle reg:1e36b26
+[LED7] led7_init
+[Info]: [TEST-UPDATE]testbox msg handle reg:1e3763c
 
-
-[14:29:10.828]收←◆audio_enc_init
+------------timer2_init :119
+PRD : 0x2ee0 / 24000000
+[17:01:09.766]收←◆
+=================addr : ffffffff
+[LED7] led7_init
+led7_test 58
+audio_enc_init
 audio_dec_init
 [Info]: [AUDIO-DAC]audio_dac_init
 
 cfg DAC_DTB:32767,ret = -252
-[Info]: [APP-UPDATE]<--------update_result_deal=0x5a00 bc9c--------->
+[Info]: [APP-UPDATE]<--------update_result_deal=0x5a00 0--------->
 
 =================update_param_len:908 404
 [Info]: [APP]app_main
@@ -104,22 +109,22 @@ new +++ 3
 
 
 -----edr + ble 's address-----
-29 98 B4 9D 94 B7 
+9B E2 A0 32 6F 09 
 
-29 98 B4 9D 94 B7 
+9B E2 A0 32 6F 09 
 le_support:3 1
 le_config:1 1 0 0
 
-[14:29:11.181]收←◆[Debug]: [LBUF]lbuf misalgin : 0x210fa4 / 0x5da
+[17:01:10.141]收←◆[Debug]: [LBUF]lbuf misalgin : 0x211270 / 0x5da
 [Debug]: [BT]-----------------------bt_connction_status_event_handler 3
 [Info]: [BT]BT_STATUS_INIT_OK
 
 
-B7 94 9D B4 98 29 
+09 6F 32 A0 E2 9B 
 [Debug]: [BT]connect_switch: 0, 0
 
 [Debug]: [BT]is_1t2_connection:0 	 total_conn_dev:0
 
 
-[14:29:15.827]收←◆[Info]: [APP_AUDIO]VOL_SAVE
+[17:01:14.763]收←◆[Info]: [APP_AUDIO]VOL_SAVE
 

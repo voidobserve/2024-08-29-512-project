@@ -7,7 +7,9 @@
 //7脚LED7
 // #define UI_LED7_PIN7_TRUE_TABLE1
 //#define UI_LED7_PIN7_TRUE_TABLE2
-#define UI_LED7_PIN7_TRUE_TABLE3
+// #define UI_LED7_PIN7_TRUE_TABLE3
+
+#define UI_LED7_PIN7_TRUE_TABLE4
 
 //12脚LED7
 //#define UI_LED7_PIN12_TRUE_TABLE1
@@ -204,7 +206,69 @@ static const struct icon_seg2pin led7_icon_seg2pin[] = {
 
 #endif /* #ifdef  UI_LED7_PIN7_TRUE_TABLE2 */
 
+#ifdef  UI_LED7_PIN7_TRUE_TABLE4
+/*********** 数码管(7脚)真值表 **************/
+// x表示未使用
+/* 0    1     2     3     4     5      6  (L)
+0  X    1A    1B    1E    USB   FM     X
+1  1F   X     2A    2B    2E    2D     X
+2  1G   2F    X     :     3B   	ST     MHz
+3  1C   2G    3F    X     3C    4E     X
+4  1D   2C    3G    3A    X     4C     4G
+5  3D   SD    3E    4D    4F    X      4B
+6  X    .     MP3   X     X     4A     X */
+//(H)
 
+// 7断数码管通用数字类转换表
+static const struct seg2pin led7_digit_seg2pin[28] = {
+    // pinH, pinL
+    {0, 1}, // 1A
+    {0, 2}, // 1B
+    {3, 0}, // 1C
+    {4, 0}, // 1D
+    {0, 3}, // 1E
+    {1, 0}, // 1F
+    {2, 0}, // 1G
+
+    {1, 2}, // 2A
+    {1, 3}, // 2B
+    {4, 1}, // 2C
+    {1, 5}, // 2D
+    {1, 4}, // 2E
+    {2, 1}, // 2F
+    {3, 1}, // 2G
+
+    {4, 3}, // 3A
+    {2, 4}, // 3B
+    {3, 4}, // 3C
+    {5, 0}, // 3D
+    {5, 2}, // 3E
+    {3, 2}, // 3F
+    {4, 2}, // 3G
+
+    {6, 5}, // 4A
+    {5, 6}, // 4B
+    {4, 5}, // 4C
+    {5, 3}, // 4D
+    {3, 5}, // 4E
+    {5, 4}, // 4F
+    {4, 6}, // 4G
+};
+
+// 数码管字母类转换表
+static const struct icon_seg2pin led7_icon_seg2pin[] = {
+    //icon       	pinH, pinL
+    {LED7_USB,          {0, 4}},   // USB
+    {LED7_FM,           {0, 5}},    // FM
+    {LED7_COLON,        {2, 3}},  // 冒号
+    {LED7_ST,           {2, 5}},    // ST
+    {LED7_MHZ,          {2, 6}},   // MHz  
+    {LED7_SD,           {5, 1}},    // SD
+    {LED7_POINT,        {6, 1}}, // 小数点 
+    {LED7_MP3,          {6, 2}},   // MP3  
+};
+
+#endif /* #ifdef  UI_LED7_PIN7_TRUE_TABLE2 */
 
 #ifdef  UI_LED7_PIN12_TRUE_TABLE1
 /*********** 数码管(12脚)真值表**************/

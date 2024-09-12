@@ -148,4 +148,4 @@ objs/apps/soundbox/power_manage/app_charge.c.o: \
   apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
-  include_lib/system\debug.h
+  apps/user_apps/hardware\users_seg.h include_lib/system\debug.h

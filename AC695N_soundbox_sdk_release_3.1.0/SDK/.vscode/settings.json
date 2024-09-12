@@ -26,6 +26,9 @@
         "app_task.h": "c",
         "key_event_deal.h": "c",
         "key_driver.h": "c",
-        "led7_driver_cfg.h": "c"
+        "led7_driver_cfg.h": "c",
+        "users_seg.h": "c",
+        "led7_driver.h": "c",
+        "vm.h": "c"
     }
 }

@@ -125,8 +125,8 @@ objs/apps/soundbox/task_manager/bt/bt_ble.c.o: \
   apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
-  include_lib\btstack/btstack_task.h include_lib/system\user_cfg.h \
-  include_lib/system/device\vm.h \
+  apps/user_apps/hardware\users_seg.h include_lib\btstack/btstack_task.h \
+  include_lib/system\user_cfg.h include_lib/system/device\vm.h \
   apps/soundbox/include\app_power_manage.h \
   include_lib/btctrler\btcontroller_modules.h \
   include_lib/btctrler/hci_transport.h include_lib/btctrler/ble/hci_ll.h \

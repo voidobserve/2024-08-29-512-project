@@ -1198,13 +1198,19 @@ void app_bt_task()
     // memset(dmx512_txbuff, 0xA5, 513);
     // dmx512_txbuff[0] = 0; // 第0个数据帧，为SC(Start Code)，开始代码帧
 
-    gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
-    gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); // 设置为高电平
+// ====================
+    // gpio_set_direction(DMX512_SEND_DATA_PIN, 0);    // 输出模式
+    // gpio_set_output_value(DMX512_SEND_DATA_PIN, 1); // 设置为高电平
+// ====================
+    
     //  dmx512_rx_config(); // 配置专门用于接收dmx512数据包的串口
 
     // sys_timer_add(NULL, test11, 1000); // 发送板使用到的程序
 
-    hardware_pwm_led_config();
+// ====================
+    // hardware_pwm_led_config();
+// ====================
+
     // hardware_mcpwm_led_config();
 
     // rf_config();

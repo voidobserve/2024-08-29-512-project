@@ -151,6 +151,7 @@ objs/apps/soundbox/ui/lcd/STYLE_02/record_action.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h \
   apps/soundbox/include\key_event_deal.h \
   include_lib/driver/cpu/br23\asm/charge.h \
   apps/soundbox/include/task_manager\record/record.h \

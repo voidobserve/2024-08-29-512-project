@@ -206,6 +206,7 @@ INCLUDES := \
 	-Iapps/soundbox/smartbox/file_transfer \
 	-Iapps/soundbox/smartbox/tuya \
 	-Iapps/soundbox/include/ui/color_led \
+	-Iapps/soundbox/include/ui/led7  \
 	-Iapps/user_apps/ \
 	-Iapps/user_apps/hardware \
 	-I$(SYS_INC_DIR) \
@@ -722,6 +723,7 @@ c_SRC_FILES := \
 	apps/user_apps/hardware/hardware_pwm_led.c \
 	apps/user_apps/rf_decode.c \
 	apps/user_apps/rf_keyhandle.c \
+	apps/user_apps/hardware/users_seg.c\
 	# apps/user_apps/hardware/uart.c\
 
 # 需要编译的 .S 文件

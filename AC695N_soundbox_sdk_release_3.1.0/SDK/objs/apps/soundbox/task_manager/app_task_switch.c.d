@@ -124,6 +124,7 @@ objs/apps/soundbox/task_manager/app_task_switch.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h \
   apps/soundbox/include\key_event_deal.h \
   cpu/br23/audio_enc\audio_recorder_mix.h \
   include_lib/media/media_develop\media/includes.h \

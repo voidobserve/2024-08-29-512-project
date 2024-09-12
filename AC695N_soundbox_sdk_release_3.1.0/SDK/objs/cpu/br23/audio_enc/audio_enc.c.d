@@ -178,5 +178,6 @@ objs/cpu/br23/audio_enc/audio_enc.c.o: cpu/br23/audio_enc/audio_enc.c \
   apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
-  apps/soundbox/include\aec_user.h include_lib/system\user_cfg.h \
+  apps/user_apps/hardware\users_seg.h apps/soundbox/include\aec_user.h \
+  include_lib/system\user_cfg.h \
   include_lib/media/media_develop/media/cpu/br23\commproc.h

@@ -128,6 +128,7 @@
                 "${workspaceFolder}/apps/soundbox/smartbox/file_transfer",
                 "${workspaceFolder}/apps/soundbox/smartbox/tuya",
                 "${workspaceFolder}/apps/soundbox/include/ui/color_led",
+                "${workspaceFolder}/apps/soundbox/include/ui/led7/",
                 "C:/JL/pi32/pi32v2-include",
                 "${workspaceFolder}/apps/user_apps/",
                 "${workspaceFolder}/apps/user_apps/hardware/"

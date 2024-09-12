@@ -102,7 +102,7 @@ objs/apps/soundbox/task_manager/app_common.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
-  apps/soundbox/include\app_main.h \
+  apps/user_apps/hardware\users_seg.h apps/soundbox/include\app_main.h \
   apps/soundbox/include\key_event_deal.h \
   apps/soundbox/include/task_manager\music/music.h \
   include_lib/system\server/server_core.h \

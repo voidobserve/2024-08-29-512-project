@@ -20,5 +20,7 @@
 #include "rf_decode.h" // rf信号接收、解码
 #include "rf_keyhandle.h" // 将rf键值和按键状态相关的处理注册到demo自带的按键扫描接口中
 
+#include "users_seg.h"
+
 #endif
 

@@ -141,7 +141,7 @@ int os_task_del(const char *name);
 /**
  * @brief :延时。中断函数或者关闭系统总中断的情况下不能调用此函数
  *
- * @Param time_tick :延时时间
+ * @Param time_tick :延时时间（单位：10ms）
  */
 /* ----------------------------------------------------------------------------*/
 void os_time_dly(int time_tick);

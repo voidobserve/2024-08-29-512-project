@@ -11,6 +11,7 @@ const struct task_info task_info_table[] = {
     {"btencry",             1,     512,   128  },
 
     {"rf_decode",           3,     128,    128},
+    {"users_seg",           3,     512,    128},
 
 
 #if TCFG_USER_TWS_ENABLE

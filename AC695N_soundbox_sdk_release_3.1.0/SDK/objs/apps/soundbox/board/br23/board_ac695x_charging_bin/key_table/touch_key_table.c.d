@@ -126,4 +126,5 @@ objs/apps/soundbox/board/br23/board_ac695x_charging_bin/key_table/touch_key_tabl
   include_lib/system/crypto_toolbox/aes_cmac.h \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
-  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h
+  apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h

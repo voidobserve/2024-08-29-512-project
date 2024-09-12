@@ -25,6 +25,23 @@ typedef struct _led7_VAR {
 #define LED7_AUX 		BIT(11)  	//11: AUX图标
 #define LED7_WMA 		BIT(12) 	//12: WMA图标
 
+#define LED7_COLON   BIT(4)
+#define LED7_ST      BIT(14)
+#define LED7_MHZ     BIT(15)
+#define LED7_POINT   BIT(6) 
+
+
+// #define LED7_USB  		BIT(0) 		//0: 图标
+// #define LED7_FM 		BIT(1) 		//1: 图标
+// #define LED7_COLON   	BIT(2) 		//2: 图标
+// #define LED7_ST   		BIT(3) 		//3: 图标
+// #define LED7_MHZ 	    BIT(4) 		//4: 图标
+// #define LED7_SD 		BIT(5) 		//5: 图标
+// #define LED7_POINT 		BIT(6) 		//6: 图标
+// #define LED7_MP3 		BIT(7) 		//7: 图标
+
+
+
 typedef u32 UI_LED7_ICON;
 
 typedef enum  _led7_pin_type {
@@ -91,6 +108,8 @@ struct led7_platform_data {
 //=================================================================================//
 void *led7_init(const struct led7_platform_data *_data);
 const struct ui_display_api *ui_led7_init(void *para);
+
+extern void led7_show_lock(u32 en); // 
 
 //=================================================================================//
 //                        		设置显示坐标接口                    			   //

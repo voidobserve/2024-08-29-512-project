@@ -178,4 +178,5 @@ objs/apps/soundbox/task_manager/power_on/power_on.c.o: \
   apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h \
   apps/soundbox/include\key_event_deal.h include_lib/system\debug.h

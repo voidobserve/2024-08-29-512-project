@@ -146,7 +146,8 @@ objs/apps/soundbox/task_manager/bt/bt.c.o: \
   apps/user_apps/hardware\delay.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
-  include_lib\btstack/avctp_user.h include_lib/btstack/btstack_typedef.h \
+  apps/user_apps/hardware\users_seg.h include_lib\btstack/avctp_user.h \
+  include_lib/btstack/btstack_typedef.h \
   include_lib\btstack/btstack_task.h include_lib\btstack/bluetooth.h \
   include_lib/btstack/le/ble_data_types.h \
   include_lib/btstack/le/ble_api.h include_lib/btstack/le/le_user.h \

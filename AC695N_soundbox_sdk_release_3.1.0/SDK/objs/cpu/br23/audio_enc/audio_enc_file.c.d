@@ -175,6 +175,6 @@ objs/cpu/br23/audio_enc/audio_enc_file.c.o: \
   apps/user_apps\user_config.h apps/user_apps/hardware\delay.h \
   apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
   apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
-  apps/user_apps/rf_keyhandle.h cpu/br23\clock_cfg.h \
-  include_lib\btstack/btstack_task.h include_lib\btstack/avctp_user.h \
-  include_lib/btstack/btstack_typedef.h
+  apps/user_apps/rf_keyhandle.h apps/user_apps/hardware\users_seg.h \
+  cpu/br23\clock_cfg.h include_lib\btstack/btstack_task.h \
+  include_lib\btstack/avctp_user.h include_lib/btstack/btstack_typedef.h

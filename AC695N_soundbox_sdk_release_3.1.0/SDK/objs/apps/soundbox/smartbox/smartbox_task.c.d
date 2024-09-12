@@ -150,6 +150,7 @@ objs/apps/soundbox/smartbox/smartbox_task.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h \
   apps/soundbox/smartbox/bt_manage/bt_trans_data\le_smartbox_module.h \
   apps/common/include\bt_common.h \
   apps/common/config/include\bt_profile_cfg.h \

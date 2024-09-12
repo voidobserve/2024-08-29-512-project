@@ -151,6 +151,7 @@ objs/apps/soundbox/ui/lcd/STYLE_02/system_action.c.o: \
   include_lib/system/crypto_toolbox/rijndael.h apps/user_apps/dmx512.h \
   apps/user_apps/hardware\hardware_pwm_led.h apps/user_apps/rf_decode.h \
   apps/user_apps/user_config.h apps/user_apps/rf_keyhandle.h \
+  apps/user_apps/hardware\users_seg.h \
   include_lib/system/ui\font/language_list.h \
   include_lib/system/ui\res/resfile.h \
   apps/soundbox/include\app_power_manage.h \

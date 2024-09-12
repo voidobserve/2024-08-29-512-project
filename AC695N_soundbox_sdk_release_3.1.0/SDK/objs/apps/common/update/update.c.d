@@ -129,6 +129,32 @@ objs/apps/common/update/update.c.o: apps/common/update/update.c \
   include_lib/system/crypto_toolbox/rijndael.h \
   include_lib/update\uart_update.h \
   include_lib/update\dual_bank_updata_api.h \
+  apps/soundbox/include\ui/ui_api.h \
+  apps/soundbox/include\ui/lcd_spi/lcd_drive.h \
+  include_lib/driver/cpu/br23\asm/spi.h include_lib/system/ui\ui/ui.h \
+  include_lib/system/ui\ui/window.h include_lib/system/ui\ui/layer.h \
+  include_lib/system/ui\ui/layout.h include_lib/system/ui\ui/ui_core.h \
+  include_lib/system/ui\ui/control.h \
+  include_lib/system/ui\ui/ui_button.h \
+  include_lib/system/ui\ui/ui_grid.h include_lib/system/ui\ui/ui_time.h \
+  include_lib/system/ui\ui/p.h include_lib/system/ui\ui/ui_camera.h \
+  include_lib/system/ui\ui/ui_pic.h include_lib/system/ui\ui/ui_text.h \
+  include_lib/system/ui\font/font_all.h \
+  include_lib/system/ui\font/font_sdfs.h \
+  include_lib/system/ui\ui/ui_battery.h \
+  include_lib/system/ui\ui/ui_browser.h \
+  include_lib/system/ui\ui/ui_slider.h \
+  include_lib/system/ui\ui/ui_slider_vert.h \
+  include_lib/system/ui\ui/ui_number.h \
+  include_lib/system/ui\ui/ui_watch.h \
+  include_lib/system/ui\ui/ui_progress.h \
+  include_lib/system/ui\ui/ui_progress_multi.h \
+  include_lib/system/ui\ui/ui_rotate.h \
+  apps/soundbox/include\ui/ui_style.h \
+  apps/soundbox/include\ui/style_led7.h \
+  apps/soundbox/include\ui/ui_common.h \
+  apps/soundbox/include\ui/led7/led7_driver.h \
+  apps/soundbox/include\ui/lcd_seg/lcd_seg3x9_driver.h \
   apps/common/third_party_profile/common\custom_cfg.h \
   apps/common/include\update_tws.h include_lib\system/debug.h \
   apps/soundbox/include\tone_player.h cpu/br23\audio_config.h \
