@@ -23,7 +23,7 @@ const u16 rf_key_table[RF_KEY_NUM_MAX][KEY_EVENT_MAX] = {
 static u8 rf_get_key_value(void);     // 声明，获取rf遥控器的键值的函数
 #endif
 static u8 rf_get_keyvalue(void); // 声明，获取rf遥控器的键值的函数
-extern u8 rf_learn(void);        // 声明，用于执行学习对应的功能
+static u8 rf_learn(void);        // 声明，用于执行学习对应的功能
 
 // 按键驱动扫描参数列表（在key_driver.c文件中注册了按键扫描）
 /*
@@ -124,7 +124,7 @@ static u8 rf_get_keyvalue(void)
     }
 #endif
 
-    // 如果按下了学习按键 或 正处于学习的功能
+    // （目前是随时都可以进行学习：）如果按下了学习按键 或 正处于学习的功能
     if (learning_flag || /* 如果正处于学习的功能 */ 
         (((u8)(rf_data & 0x0F) == (u8)RF_LEARN_KEY))) /* 如果按下了学习按键 */
     {
@@ -238,7 +238,7 @@ u16 rfkey_event_to_msg(u8 cur_task, struct key_event *key)
 #define RF_LEARN_LOOSE_TIME (1000)                                                                  // 在学习期间，判定为松手所需的时间，单位：ms
 #define RF_LEARN_LOOSE_TIME_CNT (RF_LEARN_LOOSE_TIME / __RFKEY_SCAN_TIME)                           // 在检测学习时，判定为松手的计数（等于 判定为松手所需的时间 / 扫描时间）
 #define __CNT_MAX_VAL 65535                                                                         // u16类型变量的最大的计数值，防止计数溢出（由变量类型来决定）
-u8 rf_learn(void)
+static u8 rf_learn(void)
 {
     // 如果已经检测到学习按键长按，推送消息，让线程保存遥控器的地址
     // 如果5s内没有检测到学习按键的长按，自动退出

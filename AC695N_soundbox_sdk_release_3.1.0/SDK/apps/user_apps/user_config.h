@@ -16,9 +16,9 @@
 
 #include "delay.h" // 非阻塞的延时，不适用于较长延时的场合
 #include "dmx512.h" // dmx512协议相关的功能
-#include "hardware_pwm_led.h"
+#include "hardware_pwm_led.h" // 定时器的PWM驱动LED灯
 #include "rf_decode.h" // rf信号接收、解码
-#include "rf_keyhandle.h" // 将rf键值和按键状态相关的处理注册到demo自带的接口中
+#include "rf_keyhandle.h" // 将rf键值和按键状态相关的处理注册到demo自带的按键扫描接口中
 
 #endif
 

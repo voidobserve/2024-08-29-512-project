@@ -1,3 +1,5 @@
+// encoding -- UTF-8
+// 7脚LED驱动源程序
 #include "includes.h"
 #include "app_config.h"
 #include "system/device/vm.h"

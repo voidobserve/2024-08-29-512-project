@@ -470,9 +470,9 @@ DAC硬件上的连接方式,可选的配置：
 //*********************************************************************************//
 //                                  UI 配置                                        //
 //*********************************************************************************//
-#define TCFG_UI_ENABLE 						DISABLE_THIS_MOUDLE 	//UI总开关
+#define TCFG_UI_ENABLE 						ENABLE_THIS_MOUDLE 	//UI总开关
 #define CONFIG_UI_STYLE                     STYLE_JL_LED7
-// #define TCFG_UI_LED7_ENABLE 			 	ENABLE_THIS_MOUDLE 	//UI使用LED7显示
+#define TCFG_UI_LED7_ENABLE 			 	ENABLE_THIS_MOUDLE 	//UI使用LED7显示
 // #define TCFG_UI_LCD_SEG3X9_ENABLE 		ENABLE_THIS_MOUDLE 	//UI使用LCD段码屏显示
 // #define TCFG_LCD_ST7735S_ENABLE	        ENABLE_THIS_MOUDLE
 // #define TCFG_LCD_ST7789VW_ENABLE	        ENABLE_THIS_MOUDLE
