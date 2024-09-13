@@ -5115,7 +5115,10 @@ objs/apps/user_apps/hardware/users_seg.c.o
 -r=objs/apps/user_apps/hardware/users_seg.c.o,led7_show_icon,l
 -r=objs/apps/user_apps/hardware/users_seg.c.o,led7_show_string,l
 -r=objs/apps/user_apps/hardware/users_seg.c.o,led7_show_number,l
--r=objs/apps/user_apps/hardware/users_seg.c.o,led7_show_number_add,l
+-r=objs/apps/user_apps/hardware/users_seg.c.o,sys_timer_add,l
+-r=objs/apps/user_apps/hardware/users_seg.c.o,printf,l
+-r=objs/apps/user_apps/hardware/users_seg.c.o,sys_timer_del,l
+-r=objs/apps/user_apps/hardware/users_seg.c.o,ui_set_tmp_menu,l
 -r=objs/apps/user_apps/hardware/users_seg.c.o,led7_test_data,pl
 -r=objs/apps/user_apps/hardware/users_seg.c.o,users_led7_main,pl
 include_lib/liba/br23/cpu.a.llvm.18034.crc16.c

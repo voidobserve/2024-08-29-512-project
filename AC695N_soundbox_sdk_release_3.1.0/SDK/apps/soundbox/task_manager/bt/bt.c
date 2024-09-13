@@ -970,12 +970,13 @@ int bt_key_event_handler(struct sys_event *event)
 
         // dmx512_send_test(); // 每次按下按键，发送不同内容的数据包
 
+
         ui_set_tmp_menu(MENU_SHOW_NUM_1, 1000, 0, NULL);
 
         break;
     case KEY_MUSIC_NEXT:
         log_info("    KEY_MUSIC_NEXT \n");
-        
+
         ui_set_tmp_menu(MENU_SHOW_NUM_2, 1000, 0, NULL);
 
         // bt_key_music_next();

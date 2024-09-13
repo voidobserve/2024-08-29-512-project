@@ -32,6 +32,7 @@
         "vm.h": "c",
         "ui_api.h": "c",
         "lcd_drive.h": "c",
-        "ui.h": "c"
+        "ui.h": "c",
+        "clock_cfg.h": "c"
     }
 }
