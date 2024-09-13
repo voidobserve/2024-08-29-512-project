@@ -324,7 +324,7 @@ void led7_show_string_align_right(u8 *str)
 
 
 /*----------------------------------------------------------------------------*/
-/**@brief   数字显示函数, 默认高位显示0
+/**@brief   数字显示函数, 默认高位显示0（高位补零）
    @param   void
    @return  void
    @author  Change.tsai
@@ -342,7 +342,7 @@ void led7_show_number(u16 val)
 
 
 /*----------------------------------------------------------------------------*/
-/**@brief   数字显示函数, 高位不显示0
+/**@brief   数字显示函数, 高位不显示0，直接空着
    @param   val, 显示数字
    @return  void
    @author  Change.tsai
@@ -364,7 +364,7 @@ void led7_show_number2(u16 val)
 }
 
 /*----------------------------------------------------------------------------*/
-/**@brief   数字显示函数(追加方式)
+/**@brief   数字显示函数(追加方式，从数码管的第0位开始显示)
    @param   val, 显示数字
    @return  void
    @author  Change.tsai
