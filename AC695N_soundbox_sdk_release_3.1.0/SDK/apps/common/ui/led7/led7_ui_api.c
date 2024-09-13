@@ -34,6 +34,7 @@ struct ui_display_env {
     void *private;//页面open时候传入的函数
 };
 
+// ui api内部使用到的消息,发送给ui线程来做相应的处理
 enum {
     UI_MSG_REFLASH,//刷新主页
     UI_MSG_OTHER,//显示子页面

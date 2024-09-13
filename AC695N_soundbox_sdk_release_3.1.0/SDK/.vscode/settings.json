@@ -33,6 +33,8 @@
         "ui_api.h": "c",
         "lcd_drive.h": "c",
         "ui.h": "c",
-        "clock_cfg.h": "c"
+        "clock_cfg.h": "c",
+        "wait.h": "c",
+        "ui_style.h": "c"
     }
 }

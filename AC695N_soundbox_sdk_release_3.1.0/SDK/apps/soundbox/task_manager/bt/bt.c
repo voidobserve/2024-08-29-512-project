@@ -977,7 +977,7 @@ int bt_key_event_handler(struct sys_event *event)
     case KEY_MUSIC_NEXT:
         log_info("    KEY_MUSIC_NEXT \n");
 
-        ui_set_tmp_menu(MENU_SHOW_NUM_2, 1000, 0, NULL);
+        ui_set_tmp_menu(MENU_SHOW_NUM_2, 1100, 0, NULL);
 
         // bt_key_music_next();
         break;

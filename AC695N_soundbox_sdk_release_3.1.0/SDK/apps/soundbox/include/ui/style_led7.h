@@ -71,9 +71,9 @@ enum
     MENU_LED0,
     MENU_LED1,
 
-    MENU_RECORD, // 36
+    MENU_RECORD, // 
     // =============================================
-
+    // 自定义的子菜单序号:
     MENU_SHOW_NUM_1,
     MENU_SHOW_NUM_2,
 

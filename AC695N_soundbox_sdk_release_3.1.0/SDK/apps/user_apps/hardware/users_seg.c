@@ -50,17 +50,9 @@ static void users_close_seg(void *hd, void *private)
     }
 }
 
-static u8 is_cnt_flag = 0; // 正在倒计时的标志位
-
 // 主界面
 static void users_seg_main_menu(void)
 {
-    if (is_cnt_flag)
-    {
-        // 如果正在倒计时,什么也不显示
-        return;
-    }
-
     led7_show_lock(1);
     led7_setX(0);     // 设置开始显示的坐标
     led7_show_null(); // 清空显示
@@ -82,7 +74,7 @@ static void __show_num_1(void)
     static u8 cnt = 0;
 
     led7_show_lock(1);
-    led7_setX(0); // 设置开始显示的坐标
+    led7_setX(0);     // 设置开始显示的坐标
     led7_show_null(); // 清空显示
 
     switch (cnt)
@@ -114,26 +106,44 @@ static void __show_num_1(void)
 
 static void __call_show_num_2(void)
 {
-    ui_set_tmp_menu(MENU_SHOW_NUM_2, 1000, 0, NULL);
+    // 界面/窗口的超时时间要大于sys_timer_add()设定的时间,才不会在执行完对应的功能前返回主界面
+    // 如果后续添加了更多的功能,这里的时间可能还要更长一些
+    // sys_timer_add()添加的定时器在定时时间抵达时,会打断当前的界面显示,进行覆盖
+    ui_set_tmp_menu(MENU_SHOW_NUM_2, 1100, 0, NULL);
 }
+
 static void __show_num_2(void)
 {
-    // 倒计时期间不能进行清空显示,否则观察到SEG会出现闪烁
     static int16_t cnt = 60;
     static u16 timer_id = 0; // 存放sys_timer_add()函数返回的id
+
+    u8 ret = ui_get_app_menu(0); 
+    // 如果不是当前的子界面,说明在界面来回切换时,
+    // 可能没有来得及关闭定时器,又进来了这里
+    if (ret != MENU_SHOW_NUM_2) 
+    {
+        if (timer_id) // 确认id不为0,再删除
+        {
+            sys_timer_del(timer_id); // 根据id删除sys_timer_add添加的功能
+        }
+
+        timer_id = 0; // 清除变量的值
+        cnt = 60;     // 恢复变量的默认值
+        return;
+    }
+
+    led7_show_lock(1); // 锁定待显示的缓冲区,避免出现闪烁的情况
     if (timer_id == 0)
     {
         led7_show_null(); // 清空显示/
         timer_id = sys_timer_add(NULL, __call_show_num_2, 1000);
-        is_cnt_flag = 1; // 标志位,表示正在倒计时
     }
 
     printf("%s %d \n", __func__, __LINE__);
 
-    led7_show_lock(1);
     led7_setX(0); // 设置开始显示的坐标
     led7_show_number((u16)cnt);
-    led7_show_lock(0);
+    led7_show_lock(0); // 编辑好待显示的缓冲区后,再解锁
 
     if (cnt >= 0)
     {
@@ -143,14 +153,18 @@ static void __show_num_2(void)
     if (cnt < 0)
     {
         // 进入到这里，说明cnt == -1
-        sys_timer_del(timer_id); // 根据id删除sys_timer_add添加的功能
-        timer_id = 0;            // 清除变量的值
-        cnt = 60;                // 恢复变量的默认值
-        is_cnt_flag = 0;         // 清除变量的值
+        if (timer_id) // 确认id不为0,再删除
+        {
+            sys_timer_del(timer_id); // 根据id删除sys_timer_add添加的功能
+        }
+
+        timer_id = 0; // 清除变量的值
+        cnt = 60;     // 恢复变量的默认值
     }
 }
 
 // 子界面
+// 通过调用ui_set_tmp_menu()来进入
 static int users_seg_subinterface(void *hd, void *private, u8 menu, u32 arg) // 子界面显示 //返回true不继续传递 ，返回false由common统一处理
 {
     int ret = true;
@@ -160,7 +174,7 @@ static int users_seg_subinterface(void *hd, void *private, u8 menu, u32 arg) // 
         return false;
     }
 
-    // 根据
+    // 根据ui_set_tmp_menu()传入的参数进行判断
     switch (menu)
     {
     case MENU_SHOW_NUM_1:
