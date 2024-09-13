@@ -29,6 +29,9 @@
         "led7_driver_cfg.h": "c",
         "users_seg.h": "c",
         "led7_driver.h": "c",
-        "vm.h": "c"
+        "vm.h": "c",
+        "ui_api.h": "c",
+        "lcd_drive.h": "c",
+        "ui.h": "c"
     }
 }

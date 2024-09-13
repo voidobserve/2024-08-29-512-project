@@ -45,7 +45,7 @@ enum {
 
 
 
-
+extern const struct ui_dis_api users_led7_main;
 static const struct ui_dis_api *ui_dis_main[] = {
 #if TCFG_APP_BT_EN
     &bt_main,
@@ -72,6 +72,8 @@ static const struct ui_dis_api *ui_dis_main[] = {
     /* &idle_main, */
 #endif
     &idle_main,
+
+    &users_led7_main, // 用户的led7显示主页
 };
 
 
@@ -124,8 +126,8 @@ __retry:
 // @input:
 // 	1)tmp_menu: 要显示的非主界面
 // 	2)ret_time: 持续时间ms, 返回主界面
-//  3)arg: 显示参数
-//  4)子菜单被打断或者时间到了
+//  3)arg: 显示参数（要传入的参数）
+//  4)子菜单被打断或者时间到了（子菜单结束后，要调用的函数）
 //=================================================================================//
 void ui_set_tmp_menu(u8 app_menu, u16 ret_time, s32 arg, void (*timeout_cb)(u8 menu))
 {
@@ -145,10 +147,10 @@ void ui_set_main_menu(enum ui_menu_main menu)
     int msg[2];
     msg[0] = UI_MSG_MENU_SW;
     msg[1] = menu;
-    post_ui_msg(msg, 2);
+    post_ui_msg(msg, 2); // 给ui线程发送消息
 }
 //进入app时设置一次, 设置主界面
-void ui_close_main_menu()
+void ui_close_main_menu(void)
 {
     int msg[1];
     msg[0] = UI_MSG_MENU_CLOSE;
@@ -379,30 +381,30 @@ static void ui_task(void *p)
     int ret;
     __ui_display->init = 1;
     os_sem_post(&__ui_display->sem);
-    sys_timer_add(NULL, ui_strick_loop, 100); //500ms
+    sys_timer_add(NULL, ui_strick_loop, 100); //500ms（500ms刷新主页）
     while (1) {
         ret = os_taskq_pend(NULL, msg, ARRAY_SIZE(msg)); //500ms_reflash
         if (ret != OS_TASKQ) {
             continue;
         }
         switch (msg[0]) { //action
-        case UI_MSG_EXIT:
+        case UI_MSG_EXIT: // 模式退出
             os_sem_post((OS_SEM *)msg[1]);
             os_time_dly(10000);
             break;
-        case UI_MSG_STRICK:
+        case UI_MSG_STRICK: // 定时器事件
             __ui_strick_action();
             break;
-        case UI_MSG_REFLASH:
+        case UI_MSG_REFLASH: // 刷新主页
             __ui_menu_reflash_action(!!msg[1]);
             break;
-        case UI_MSG_OTHER:
+        case UI_MSG_OTHER: // 显示子页面
             __ui_user_action(msg[1], msg[3], msg[2], (void (*)(u8))msg[4]);
             break;
-        case UI_MSG_MENU_SW:
+        case UI_MSG_MENU_SW: // 页面切换
             __ui_main_open_action(msg[1]);
             break;
-        case UI_MSG_MENU_CLOSE:
+        case UI_MSG_MENU_CLOSE: // 页面关闭
             __ui_main_close_action();
             break;
 
@@ -429,7 +431,7 @@ int led7_ui_init(const struct ui_devices_cfg *ui_cfg)
 #endif
 
 #if TCFG_UI_LED7_ENABLE
-    void *led7_init(const struct led7_platform_data * _data);
+    extern void *led7_init(const struct led7_platform_data * _data);
     __ui_display->ui_api = (LCD_API *)led7_init(ui_cfg->private_data);
 #endif
 
@@ -437,8 +439,8 @@ int led7_ui_init(const struct ui_devices_cfg *ui_cfg)
         return -ENODEV;
     }
     os_sem_create(&__ui_display->sem, 0);
-    err = task_create(ui_task, NULL, UI_TASK_NAME);
-    os_sem_pend(&__ui_display->sem, 0);
+    err = task_create(ui_task, NULL, UI_TASK_NAME); // 创建ui线程
+    os_sem_pend(&__ui_display->sem, 0); // 一直阻塞等待，获取信号量
     return 0;
 }
 

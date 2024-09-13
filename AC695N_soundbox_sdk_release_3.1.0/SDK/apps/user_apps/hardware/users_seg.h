@@ -4,7 +4,7 @@
 #include "includes.h"
 #include "user_config.h"
 
-
+extern void users_seg_config(void);
 
 
 #endif

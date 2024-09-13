@@ -31,7 +31,7 @@ volatile u32 rf_addr = 0xFFFFFFFF; // 存放遥控器的地址 (后续可能要�
 // volatile u8 rf_key = 0;            // 存放遥控器按键的键值
 
 ___interrupt
-    AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率
+    AT_VOLATILE_RAM_CODE // 放在RAM中运行，提高效率，也能防止程序跑飞
     void
     timer_rf_isr(void)
 {

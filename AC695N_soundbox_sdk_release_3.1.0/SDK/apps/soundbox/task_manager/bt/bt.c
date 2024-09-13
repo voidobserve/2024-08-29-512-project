@@ -1214,6 +1214,11 @@ void app_bt_task()
     // hardware_mcpwm_led_config();
 
     // rf_config();
+    
+    // 7脚的双向数码管功能测试：
+    users_seg_config();
+    // printf("show seg main menu\n");
+    // led7_test();
 
 #if TCFG_TONE2TWS_ENABLE
     extern void tone2tws_bt_task_start(u8 tone_play);

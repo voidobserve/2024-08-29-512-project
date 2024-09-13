@@ -38,7 +38,7 @@ extern void ui_menu_reflash(u8 break_in);//break_in 是否打断显示,例如显
 extern u8   ui_get_app_menu(u8);
 extern void ui_set_led(u8 app_menu, u8 on, u8 phase, u16 highlight, u16 period);
 extern void ui_set_auto_reflash(u32 msec);//自动刷新主页
-extern void ui_close_main_menu();
+extern void ui_close_main_menu(void);
 extern void ui_set_tmp_menu(u8 app_menu, u16 ret_time, s32 arg, void (*timeout_cb)(u8 menu));
 extern void ui_common(void *hd, void *private, u8 menu, u32 arg);//公共显示
 

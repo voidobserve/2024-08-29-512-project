@@ -101,4 +101,52 @@ objs/apps/user_apps/hardware/users_seg.c.o: \
   apps/user_apps/dmx512.h apps/user_apps/hardware\hardware_pwm_led.h \
   apps/user_apps/rf_decode.h apps/user_apps/user_config.h \
   apps/user_apps/rf_keyhandle.h apps/user_apps/hardware\users_seg.h \
-  apps/soundbox/include/ui/led7\led7_driver.h
+  apps/soundbox/include/ui/led7\led7_driver.h \
+  apps/soundbox/include\ui/ui_api.h apps/soundbox/include\app_config.h \
+  apps/soundbox/board/br23\board_config.h \
+  apps/soundbox/board/br23/board_ac6954a_demo/board_ac6954a_demo_cfg.h \
+  apps/soundbox/board/br23/board_ac695x_demo/board_ac695x_demo_cfg.h \
+  apps/common/usb\usb_std_class_def.h \
+  apps/soundbox/board/br23/board_ac6951_kgb_v1/board_ac6951_kgb_cfg.h \
+  apps/soundbox/board/br23/board_ac6952e_lighter/board_ac6952e_lighter_cfg.h \
+  apps/soundbox/board/br23/board_ac6955f_headset_mono/board_ac6955f_headset_mono_cfg.h \
+  apps/soundbox/board/br23/board_ac695x_charging_bin/board_ac695x_charging_bin.h \
+  apps/soundbox/board/br23/board_ac695x_btemitter/board_ac695x_btemitter.h \
+  apps/soundbox/board/br23/board_ac695x_tws_box/board_ac695x_tws_box.h \
+  apps/soundbox/board/br23/board_ac695x_tws/board_ac695x_tws.h \
+  apps/soundbox/board/br23/board_ac695x_multimedia_charging_bin/board_ac695x_multimedia_charging_bin.h \
+  apps/soundbox/board/br23/board_ac695x_soundcard/board_ac695x_soundcard.h \
+  apps/soundbox/board/br23/board_ac695x_smartbox/board_ac695x_smartbox.h \
+  apps/soundbox/board/br23/board_ac695x_lcd/board_ac695x_lcd_cfg.h \
+  apps/soundbox/board/br23/board_ac695x_cvp_develop/board_ac695x_cvp_develop_cfg.h \
+  apps/soundbox/board/br23/board_ac695x_audio_effects/board_ac695x_audio_effects_cfg.h \
+  apps/soundbox/board/br23/board_ac695x_megaphone/board_ac695x_megaphone_cfg.h \
+  apps/soundbox/board/br23/board_ac6951g/board_ac6951g_cfg.h \
+  apps/soundbox/board/br23/board_ac6083a/board_ac6083a_cfg.h \
+  apps/soundbox/board/br23/board_ac6083a_iap/board_ac6083a_iap_cfg.h \
+  include_lib/btctrler\btcontroller_mode.h \
+  apps/soundbox/include/user_cfg_id.h apps/common/usb\usb_common_def.h \
+  apps/soundbox/include\ui/lcd_spi/lcd_drive.h \
+  include_lib/driver/cpu/br23\asm/spi.h include_lib/system/ui\ui/ui.h \
+  include_lib/system/ui\ui/window.h include_lib/system/ui\ui/layer.h \
+  include_lib/system/ui\ui/layout.h include_lib/system/ui\ui/ui_core.h \
+  include_lib/system/ui\ui/control.h \
+  include_lib/system/ui\ui/ui_button.h \
+  include_lib/system/ui\ui/ui_grid.h include_lib/system/ui\ui/ui_time.h \
+  include_lib/system/ui\ui/p.h include_lib/system/ui\ui/ui_camera.h \
+  include_lib/system/ui\ui/ui_pic.h include_lib/system/ui\ui/ui_text.h \
+  include_lib/system/ui\font/font_all.h \
+  include_lib/system/ui\font/font_sdfs.h \
+  include_lib/system/ui\ui/ui_battery.h \
+  include_lib/system/ui\ui/ui_browser.h \
+  include_lib/system/ui\ui/ui_slider.h \
+  include_lib/system/ui\ui/ui_slider_vert.h \
+  include_lib/system/ui\ui/ui_number.h \
+  include_lib/system/ui\ui/ui_watch.h \
+  include_lib/system/ui\ui/ui_progress.h \
+  include_lib/system/ui\ui/ui_progress_multi.h \
+  include_lib/system/ui\ui/ui_rotate.h \
+  apps/soundbox/include\ui/ui_style.h \
+  apps/soundbox/include\ui/style_led7.h \
+  apps/soundbox/include\ui/ui_common.h \
+  apps/soundbox/include\ui/lcd_seg/lcd_seg3x9_driver.h

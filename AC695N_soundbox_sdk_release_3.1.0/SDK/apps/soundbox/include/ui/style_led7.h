@@ -17,6 +17,8 @@ enum ui_menu_main {
     UI_FM_MENU_MAIN,
     UI_PC_MENU_MAIN,
     UI_IDLE_MENU_MAIN,
+
+    UI_USERS_LED_MENU,
 };
 
 

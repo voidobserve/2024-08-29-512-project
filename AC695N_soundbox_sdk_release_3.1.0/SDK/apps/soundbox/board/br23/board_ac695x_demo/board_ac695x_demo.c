@@ -919,7 +919,7 @@ static void board_devices_init(void)
 #endif      //end if CONFIG_GSENSOR_ENABLE
 
 #if TCFG_UI_ENABLE
-	UI_INIT(&ui_cfg_data);
+	UI_INIT(&ui_cfg_data); 
 #endif /* #if TCFG_UI_ENABLE */
 
 	return;

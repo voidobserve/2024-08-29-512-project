@@ -129,7 +129,7 @@ int timer2_init()
 
     TIMER_CNT = 0;
     TIMER_PRD = prd_cnt; //1ms
-    request_irq(TIMER_VETOR, 1, timer2_isr, 0);
+    request_irq(TIMER_VETOR, 1, timer2_isr, 0); // 绑定/注册定时器的中断
     TIMER_CON = (index << 4) | BIT(0) | BIT(3);
 
     printf("PRD : 0x%x / %d", TIMER_PRD, clk_get("timer"));

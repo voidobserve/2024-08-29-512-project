@@ -25,7 +25,8 @@
 
 //#define  UI_LED7_TRUE_TABLE1
 //#define  UI_LED7_TRUE_TABLE2
-#define  UI_LED7_TRUE_TABLE3
+// #define  UI_LED7_TRUE_TABLE3
+// #define UI_LED7_TRUE_TABLE4
 
 struct ui_led7_env {
     u8 init;
@@ -54,6 +55,8 @@ static const  u8 LED7_NUMBER_2_SEG[10] = {
 };
 
 //字母'A' ~ 'Z'显示段码表
+// 每一段表示 ： h g f e d c b a
+// 没有效果的用0x40表示（0x40显示出来是 “ - ”）
 static const  u8 LED7_LARGE_LETTER_2_SEG[26] = {
     0x77, 0x40, 0x39, 0x3f, 0x79, ///<ABCDE
     0x71, 0x40, 0x76, 0x06, 0x40, ///<FGHIJ
@@ -64,12 +67,14 @@ static const  u8 LED7_LARGE_LETTER_2_SEG[26] = {
 };
 
 //字母'a' ~ 'z'显示段码表
+// 每一段表示 ： h g f e d c b a
+// 没有效果的用0x40表示（0x40显示出来是 “ - ”）
 static const  u8 LED7_SMALL_LETTER_2_SEG[26] = {
     0x77, 0x7c, 0x58, 0x5e, 0x79, ///<abcde
     0x71, 0x40, 0x40, 0x40, 0x40, ///<fghij
     0x40, 0x38, 0x40, 0x54, 0x5c, ///<klmno
     0x73, 0x67, 0x50, 0x40, 0x78, ///<pqrst
-    0x3e, 0x3e, 0x40, 0x40, 0x40, ///<uvwxy
+    0x3e, 0x3e, 0x40, 0x40, 0x6E, ///<uvwxy
     0x40 ///<z
 };
 
@@ -547,7 +552,7 @@ void led7_scan(void *param)
     seg = __this->led7_var.bShowBuff1[cnt];
 
     if (__this->user_data->pin_type == LED7_PIN7) {
-        //pin cnt output H
+        //pin cnt output H  // 通过hd0和hd两个寄存器来配置引脚的驱动能力，11--对应最高驱动能力
         gpio_set_hd0(__this->user_data->pin_cfg.pin7.pin[cnt], 1);
         gpio_set_hd(__this->user_data->pin_cfg.pin7.pin[cnt], 1);
         gpio_direction_output(__this->user_data->pin_cfg.pin7.pin[cnt], 1);
@@ -673,9 +678,10 @@ void *led7_init(const struct led7_platform_data *_data)
     __this->user_data = data;
 
     __ui_led7_clear_all();
-    /* sys_hi_timer_add(NULL, led7_scan, 2); //2ms */
-    void app_timer_led_scan(void (*led_scan)(void *));
-    app_timer_led_scan(led7_scan);
+    /* sys_hi_timer_add(NULL, led7_scan, 2); //2ms */ 
+    // 下面的两行程序相当于把 led7_scan() 交给定时器定期调用（定时器已经提前配置为xms产生一次中断）
+    extern void app_timer_led_scan(void (*led_scan)(void *)); // 函数声明
+    app_timer_led_scan(led7_scan); // 调用函数app_timer_led_scan()
 
     __this->init = true;
     return (void *)(&LED7_HW);

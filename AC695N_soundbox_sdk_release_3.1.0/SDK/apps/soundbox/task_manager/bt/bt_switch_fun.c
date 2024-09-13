@@ -822,8 +822,8 @@ void bt_task_init()
     __this->force_poweroff  = 0 ;
     __this->init_start = 0;//蓝牙协议栈已经开始初始化标志位
 
-    UI_SHOW_WINDOW(ID_WINDOW_BT);
-    UI_SHOW_MENU(MENU_BT, 1000, 0, NULL);
+    // UI_SHOW_WINDOW(ID_WINDOW_BT); // 设置主菜单
+    // UI_SHOW_MENU(MENU_BT, 1000, 0, NULL); // 显示子菜单
 
 #if TCFG_BLUETOOTH_BACK_MODE
     if (__this->init_ok) {

@@ -258,14 +258,14 @@ static const struct seg2pin led7_digit_seg2pin[28] = {
 // 数码管字母类转换表
 static const struct icon_seg2pin led7_icon_seg2pin[] = {
     //icon       	pinH, pinL
-    {LED7_USB,          {0, 4}},   // USB
+    {LED7_USB,          {0, 4}},    // USB
     {LED7_FM,           {0, 5}},    // FM
-    {LED7_COLON,        {2, 3}},  // 冒号
+    {LED7_COLON,        {2, 3}},    // 冒号
     {LED7_ST,           {2, 5}},    // ST
-    {LED7_MHZ,          {2, 6}},   // MHz  
+    {LED7_MHZ,          {2, 6}},    // MHz  
     {LED7_SD,           {5, 1}},    // SD
-    {LED7_POINT,        {6, 1}}, // 小数点 
-    {LED7_MP3,          {6, 2}},   // MP3  
+    {LED7_POINT,        {6, 1}},    // 小数点 
+    {LED7_MP3,          {6, 2}},    // MP3  
 };
 
 #endif /* #ifdef  UI_LED7_PIN7_TRUE_TABLE2 */
